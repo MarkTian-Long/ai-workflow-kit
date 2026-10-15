@@ -15,6 +15,12 @@ python workflow_asset_sync.py prepare --catalog catalog.example.json --target ex
 
 `policy-digests` 只计算范围摘要。执行者必须先核对来源、再分发权、目的地、完整依赖及数据边界，取得适用授权后才把摘要填回 `approved_policy_sha256` 并将资产设为 `approved`。摘要用于发现配置变化，不是签名、权限系统或自动授权。
 
+已有资产较多时，可在私人清单中声明 `inventory_roots`：`skill-directories` 只检查根下一层含 SKILL.md 的目录及指定元数据，`files` 只读取明确的 include 成员。运行 `inventory --catalog ...` 返回本地摘要和新增/变化；加 `--record` 只在完整且有变化时保存本地发现状态。缺根或读失败不记录删除。发现不会改变发布批准，不扫描未声明目录；不要把其含私人路径的输出上传公开仓库。
+
+资产有效性优先引用既有审计和真实任务证据，发布任务只补来源、许可、独立依赖和本次导出差异。新增结果回原资产记录，不另建长期评分表。不同公开或私有目标可配置各自已审阅的 `private_patterns`；此配置属于目标策略摘要，不能静默改动。
+
+默认生成发布允许清单。已有严格产品发行流程时，目标可显式使用 `allowlist_mode: "source-sha256-manifest"`，由已批准源提供 `allowlist_path` 指定的 JSON；其中 `files` 必须逐项列出其余全部成员的 `bytes` 和 `sha256`，与准备字节精确相等。这种方式保留产品原有 manifest，不额外插入文件；原产品构建与验收仍由其维护流程执行。
+
 `baseline.json` 由可用且获授权的 GitHub 能力获取：包含 `repository`、`branch`、`commit`、`tree_sha` 和 `files`（仓库全部文件路径到 Git blob SHA 的映射）。读取确定提交的完整递归树，拒绝截断结果。已有内容的首次纳管需在目标 `adopt_existing` 中明确登记其已审阅 blob；空仓库则先有一个正常初始提交。不要用本地猜测代替远端基线。
 
 ## 审阅、提交和读回

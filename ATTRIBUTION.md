@@ -15,3 +15,7 @@ structured-analysis-discussion 吸收以下公开项目的方法概念，未复�
 新增 HTML 汇报模板、流程图与 SVG、文档转换包装器及发布准备工具为本集合独立原创的通用实现和合成示例。HTML 只采用阅读导航、长表、证据等高层需求，未复制公司内部模板的代码、图标或业务文本；图样不来自实际项目。
 
 文档转换工具依赖单独安装的 [Microsoft MarkItDown 0.1.7](https://github.com/microsoft/markitdown/tree/v0.1.7)，其 [MIT 许可证](https://github.com/microsoft/markitdown/blob/v0.1.7/LICENSE) 由上游维护。此处仅分发自有包装器和依赖声明，不捆绑 MarkItDown 或其可选依赖；其他依赖的许可仍分别适用。
+
+资产选择、需求到 Demo、网页研究回流三份 SOP，以及 PDF 按页读取包装器与合成样例生成脚本，均为本集合的原创通用说明或实现。没有直接再分发内部 SOP、真实 PDF、组织控制面或第三方 Skill。
+
+PDF 工具的核心依赖 [pypdf 6.10.0](https://github.com/py-pdf/pypdf/tree/6.10.0) 采用 [BSD-3-Clause](https://github.com/py-pdf/pypdf/blob/6.10.0/LICENSE)；可选合成样例使用 [ReportLab 4.4.9](https://pypi.org/project/reportlab/4.4.9/)，沿上游 BSD 许可。两者均独立安装，不捆绑上游包、字体或素材。

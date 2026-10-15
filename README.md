@@ -10,6 +10,9 @@
 | 制作可阅读、可比较、可追溯的汇报 | [HTML 汇报模板](templates/html-report/README.md) | 编辑空白骨架或合成示例，桌面浏览器直接打开；章节可增减 |
 | 说明步骤、角色或状态变化 | [流程图制作与图样](diagrams/flowcharts/README.md) | 三组可编辑 Mermaid 与离线 SVG，含制作 SOP；按问题取用 |
 | 把本地文档转成便于搜索的 Markdown | [文档转换小工具](scripts/document-conversion/README.md) | 明确的本地输入、Markdown 输出；单独安装所列依赖，无 OCR |
+| 先了解 PDF 各页，再提取指定页 | [PDF 按页读取](scripts/pdf-on-demand/README.md) | 本地逐页索引、1 基页码选择、低/空文本提示；无 OCR |
+| 按需求制作可评审的本地 Demo | [需求到 Demo SOP](sops/prd-to-demo.md) | 需求基线、行为对照、实际浏览器检查和模拟边界 |
+| 把网页研究接回正在进行的任务 | [网页研究回流 SOP](sops/web-research-to-local.md) | 明确研究决定、来源与反例，核验后合并回唯一材料 |
 | 定期把批准的本地小件发布到 GitHub | [按清单准备快照](scripts/asset-sync/README.md) | 明确来源和目标，冻结、比较、审阅及完整读回；网络写入由获授权执行者完成 |
 
 ## 如何取用
@@ -25,5 +28,9 @@ SOP 直接读取。模板、图样和脚本保留整个对应目录及根 [LICEN
 本仓库接收经过核验的发布快照；发布者的每项内容保留唯一编辑源，通过清单导出。修订先回原源，避免两边平行手改。新增资产或目标先核对来源、权属、依赖与数据范围；同范围常规修改经适用检查后发布。无变化不建空提交，缺失来源不自动删除，远端冲突先处理。
 
 这个仓库不会自动安装其内容或开启后台调度。私人画像、账号配置、客户材料、真实报告、运行日志和发布者的内部清单不随源码分发。
+
+需要基础协作规则、路由和文件生命周期时，可从 [harness-starter](https://github.com/MarkTian-Long/harness-starter) 开始，再按任务选择这里的小件。个人偏好和机器适配留在自己的私有层；采用时固定提交并核对依赖与当地规则。
+
+维护者可用[资产选择 SOP](sops/asset-selection.md)复用已有手动审计和实际任务证据，只补来源、许可、独立用法与发布差异。发现了多少文件、公开了多少小件，都不能代替长期效果判断。
 
 原创内容按 [MIT](LICENSE) 提供；第三方依赖各自适用其许可证。来源见 [ATTRIBUTION](ATTRIBUTION.md)，实际检查与局限见 [VALIDATION](VALIDATION.md)。

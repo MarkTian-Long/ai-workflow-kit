@@ -1,0 +1,2 @@
+# Core runtime; upstream packages are installed separately, never bundled.
+pypdf==6.10.0

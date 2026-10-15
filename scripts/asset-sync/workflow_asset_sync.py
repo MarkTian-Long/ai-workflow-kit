@@ -222,6 +222,8 @@ def prepare(catalog_path, target_id, baseline_path):
     state = read_json(state_path) if state_path.exists() else {"managed_files": {}}
     if state.get("repository", target["repository"]) != target["repository"]:
         raise SyncError("Previous receipt belongs to another repository")
+    if state.get("branch", target["branch"]) != target["branch"]:
+        raise SyncError("Previous receipt belongs to another branch; migrate state explicitly")
     runs = local_path(cp, c["runs_root"])
     with locked(runs / (target_id + ".lock")):
         files, sources, frozen_sources, policies, owners = {}, [], [], {}, {}
@@ -248,13 +250,28 @@ def prepare(catalog_path, target_id, baseline_path):
         if not files:
             raise SyncError("No approved assets for target")
         allow_path = relpath(target["allowlist_path"])
-        if allow_path in files:
-            raise SyncError(f"Asset conflicts with reserved generated allowlist: {allow_path}")
-        files[allow_path] = json.dumps({"schema_version": 1, "license": target["license"],
-            "source_policy": "generated reviewed snapshots; authoritative sources maintained separately",
-            "files": sorted([*files, allow_path])}, ensure_ascii=False, indent=2).encode() + b"\n"
-        owners[allow_path] = "generated-allowlist"
-        checks = validate_files(files, c["private_patterns"])
+        allow_mode = target.get("allowlist_mode", "generated")
+        if allow_mode == "generated":
+            if allow_path in files:
+                raise SyncError(f"Asset conflicts with reserved generated allowlist: {allow_path}")
+            files[allow_path] = json.dumps({"schema_version": 1, "license": target["license"],
+                "source_policy": "generated reviewed snapshots; authoritative sources maintained separately",
+                "files": sorted([*files, allow_path])}, ensure_ascii=False, indent=2).encode() + b"\n"
+            owners[allow_path] = "generated-allowlist"
+        elif allow_mode == "source-sha256-manifest":
+            if allow_path not in files:
+                raise SyncError("Source manifest missing from approved assets")
+            try:
+                declared = json.loads(files[allow_path])["files"]
+            except (ValueError, KeyError, TypeError) as exc:
+                raise SyncError("Invalid source SHA-256 manifest") from exc
+            expected_manifest = {p: {"bytes": len(data), "sha256": digest(data)}
+                                 for p, data in files.items() if p != allow_path}
+            if declared != expected_manifest:
+                raise SyncError("Source manifest does not cover exact prepared bytes/members")
+        else:
+            raise SyncError(f"Unknown allowlist mode: {allow_mode}")
+        checks = validate_files(files, target.get("private_patterns", c["private_patterns"]))
         removals = target.get("removals", [])
         removed = {relpath(x["path"]) for x in removals if x.get("approved") and x.get("reason")}
         if removed.intersection(files):
@@ -372,6 +389,58 @@ def receipt(run, readback_path):
     return {"published": True, "commit": state["commit"], "receipt": state["receipt"], "state_advanced": advance}
 
 
+def inventory(catalog_path, record=False):
+    """Discover metadata only within declared roots; never change publication approval."""
+    cp, c = config(catalog_path)
+    roots = c.get("inventory_roots", [])
+    if len({r["id"] for r in roots}) != len(roots):
+        raise SyncError("Duplicate inventory root id")
+    state_path = local_path(cp, c.get("inventory_state", "state/inventory.json"))
+
+    def scan():
+        entries, blocked = {}, []
+        for root in roots:
+            base = local_path(cp, root["path"])
+            if not base.is_dir():
+                blocked.append({"root": root["id"], "reason": "declared root missing"})
+                continue
+            if root["kind"] == "skill-directories":
+                candidates = [(p.name, [p.name + "/" + f for f in root.get("evidence_files", ["SKILL.md"])
+                    if (p / f).is_file()]) for p in sorted(base.iterdir())
+                    if p.is_dir() and (p / "SKILL.md").is_file()]
+            elif root["kind"] == "files":
+                candidates = [(p, [p]) for p in root["include"]]
+            else:
+                raise SyncError(f"Unknown inventory root kind: {root['kind']}")
+            for name, paths in candidates:
+                key = root["id"] + "/" + name
+                try:
+                    hashes = {p: digest(safe_file(base, p).read_bytes()) for p in paths}
+                    entries[key] = {"root": root["id"], "source": str(base / name),
+                        "signature": digest(canonical(hashes)), "members": hashes,
+                        "disposition": "discovered; approval comes only from the asset catalog"}
+                except (SyncError, OSError) as exc:
+                    blocked.append({"root": root["id"], "entry": key, "reason": str(exc)})
+        previous = read_json(state_path) if state_path.exists() else {"entries": {}}
+        old = previous.get("entries", {})
+        changed = sorted(k for k, v in entries.items() if old.get(k, {}).get("signature") != v["signature"])
+        removed = sorted(set(old) - set(entries)) if not blocked else []
+        root_signature = digest(canonical(roots))
+        scope_changed = previous.get("root_signature") != root_signature
+        saved = False
+        if record and not blocked and (changed or removed or scope_changed):
+            write_json(state_path, {"schema_version": 1, "root_signature": root_signature, "entries": entries})
+            saved = True
+        return {"entry_count": len(entries), "roots": len(roots), "changed": changed,
+            "removed_candidates": removed, "scope_changed": scope_changed, "blocked": blocked,
+            "recorded": saved, "entries": entries, "publication_approval_changed": False}
+
+    if record:
+        with locked(state_path.with_name(state_path.name + ".lock")):
+            return scan()
+    return scan()
+
+
 def main():
     p = argparse.ArgumentParser(description=__doc__)
     sub = p.add_subparsers(dest="command", required=True)
@@ -389,6 +458,9 @@ def main():
             s.add_argument("--readback", required=True)
     s = sub.add_parser("policy-digests")
     s.add_argument("--catalog", required=True)
+    s = sub.add_parser("inventory")
+    s.add_argument("--catalog", required=True)
+    s.add_argument("--record", action="store_true", help="Record a changed complete inventory locally; never approve publication")
     args = p.parse_args()
     try:
         if args.command == "prepare":
@@ -399,6 +471,8 @@ def main():
             result = upload_plan(args.run)
         elif args.command == "receipt":
             result = receipt(args.run, args.readback)
+        elif args.command == "inventory":
+            result = inventory(args.catalog, args.record)
         else:
             _, c = config(args.catalog)
             result = {"assets": {a["id"]: asset_policy(a) for a in c["assets"]},

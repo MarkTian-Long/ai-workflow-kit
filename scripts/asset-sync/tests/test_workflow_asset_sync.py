@@ -70,6 +70,39 @@ class SyncBoundaryTests(unittest.TestCase):
         with self.assertRaisesRegex(s.SyncError, "missing is never"):
             self.prepare()
 
+    def use_source_manifest(self):
+        data = (self.root / "content" / "guide.md").read_bytes()
+        s.write_json(self.root / "content" / "release.json", {"files": {
+            "sops/guide.md": {"bytes": len(data), "sha256": s.digest(data)}}})
+        self.c["assets"][0]["members"].append({"source": "release.json", "destination": "release.json"})
+        self.c["targets"]["kit"].update(allowlist_mode="source-sha256-manifest", allowlist_path="release.json")
+        self.save()
+
+    def test_product_manifest_preserved_without_extra_members(self):
+        self.use_source_manifest()
+        run = self.prepare()
+        m = s.read_json(run / "manifest.json")
+        self.assertEqual(set(m["files"]), {"sops/guide.md", "release.json"})
+        self.assertEqual((run / "files/release.json").read_bytes(), (self.root / "content/release.json").read_bytes())
+
+    def test_product_manifest_rejects_stale_bytes(self):
+        self.use_source_manifest()
+        (self.root / "content/guide.md").write_text("changed", encoding="utf-8")
+        with self.assertRaisesRegex(s.SyncError, "exact prepared bytes/members"):
+            self.prepare()
+
+    def test_product_manifest_rejects_missing_manifest(self):
+        self.c["targets"]["kit"]["allowlist_mode"] = "source-sha256-manifest"
+        self.save()
+        with self.assertRaisesRegex(s.SyncError, "manifest missing"):
+            self.prepare()
+
+    def test_unknown_allowlist_mode_rejected(self):
+        self.c["targets"]["kit"]["allowlist_mode"] = "disable-checks"
+        self.save()
+        with self.assertRaisesRegex(s.SyncError, "Unknown allowlist mode"):
+            self.prepare()
+
     def test_source_drift_requires_reprepare(self):
         run = self.prepare()
         (self.root / "content" / "guide.md").write_text("changed", encoding="utf-8")
@@ -233,6 +266,54 @@ class SyncBoundaryTests(unittest.TestCase):
         self.assertTrue(results[0]["state_advanced"])
         self.assertFalse(s.receipt(old_run, old_readback)["state_advanced"])
         self.assertEqual(s.read_json(self.root / "state.json")["commit"], "f" * 40)
+
+    def test_inventory_discovers_only_declared_roots_without_approving(self):
+        skills = self.root / "skills"
+        (skills / "new-skill").mkdir(parents=True)
+        (skills / "new-skill" / "SKILL.md").write_text("# Synthetic skill", encoding="utf-8")
+        self.c["inventory_roots"] = [{"id": "local", "kind": "skill-directories", "path": "skills"}]
+        self.save()
+        before = self.cp.read_bytes()
+        r = s.inventory(self.cp)
+        self.assertEqual(r["entry_count"], 1)
+        self.assertEqual(r["changed"], ["local/new-skill"])
+        self.assertFalse(r["publication_approval_changed"])
+        self.assertFalse((self.root / "state/inventory.json").exists())
+        self.assertEqual(self.cp.read_bytes(), before)
+
+    def test_inventory_repeat_does_not_rewrite_unchanged_state(self):
+        self.c["inventory_roots"] = [{"id": "docs", "kind": "files", "path": "content", "include": ["guide.md"]}]
+        self.save()
+        self.assertTrue(s.inventory(self.cp, record=True)["recorded"])
+        state = self.root / "state/inventory.json"
+        before = state.stat().st_mtime_ns
+        r = s.inventory(self.cp, record=True)
+        self.assertFalse(r["recorded"])
+        self.assertEqual(r["changed"], [])
+        self.assertEqual(state.stat().st_mtime_ns, before)
+
+    def test_missing_inventory_root_never_records_deletion(self):
+        self.c["inventory_roots"] = [{"id": "missing", "kind": "files", "path": "absent", "include": ["guide.md"]}]
+        self.save()
+        r = s.inventory(self.cp, record=True)
+        self.assertTrue(r["blocked"])
+        self.assertFalse(r["recorded"])
+        self.assertEqual(r["removed_candidates"], [])
+
+    def test_state_cannot_silently_move_to_another_branch(self):
+        s.write_json(self.root / "state.json", {"repository": "example/kit", "branch": "another", "managed_files": {}})
+        with self.assertRaisesRegex(s.SyncError, "another branch"):
+            self.prepare()
+
+    def test_target_privacy_policy_is_scoped_and_requires_new_digest(self):
+        (self.root / "content" / "guide.md").write_text("TARGET_PRIVATE_EXAMPLE", encoding="utf-8")
+        self.c["targets"]["kit"]["private_patterns"] = ["TARGET_PRIVATE_EXAMPLE"]
+        s.write_json(self.cp, self.c)
+        with self.assertRaisesRegex(s.SyncError, "Target scope changed"):
+            self.prepare()
+        self.save()
+        with self.assertRaisesRegex(s.SyncError, "Private/secret"):
+            self.prepare()
 
 
 if __name__ == "__main__":

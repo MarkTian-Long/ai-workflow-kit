@@ -1,0 +1,2 @@
+# Optional: only needed to generate the synthetic PDF fixture.
+reportlab==4.4.9
