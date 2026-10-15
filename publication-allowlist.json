@@ -1,0 +1,20 @@
+{
+  "version": "0.1.0",
+  "license": "MIT",
+  "snapshot_only": true,
+  "files": [
+    "ATTRIBUTION.md",
+    "LICENSE",
+    "README.md",
+    "VALIDATION.md",
+    "skills/session-closeout/SKILL.md",
+    "skills/session-closeout/agents/openai.yaml",
+    "skills/session-closeout/references/group-handoff.md",
+    "skills/session-closeout/references/learning-reuse.md",
+    "skills/structured-analysis-discussion/SKILL.md",
+    "skills/structured-analysis-discussion/agents/openai.yaml",
+    "skills/structured-analysis-discussion/references/provenance-and-maintenance.md",
+    "sops/session-handoff.md",
+    "publication-allowlist.json"
+  ]
+}

@@ -1,0 +1,6 @@
+interface:
+  display_name: "会话沉淀与续接"
+  short_description: "保存会话成果与待办，回流共用资产，一次组织多会话收口与新总控续接"
+  default_prompt: "使用 $session-closeout 整理本次指定范围的成果、待办与可复用内容；按我的明确要求完成归档或新会话续接，并核对实际保存和交接结果。"
+policy:
+  allow_implicit_invocation: true
