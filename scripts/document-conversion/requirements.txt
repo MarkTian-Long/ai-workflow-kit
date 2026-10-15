@@ -1,0 +1,3 @@
+# Tested direct dependency. No upstream code or installed packages are bundled.
+# These extras cover document formats without audio/cloud/YouTube extras.
+markitdown[docx,pdf,pptx,xls,xlsx]==0.1.7

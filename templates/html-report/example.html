@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <link rel="icon" href="data:,">
+  <title>共享工具预约流程 · 合成示例</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="report.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到报告正文</a>
+  <div class="layout" id="top">
+    <aside class="rail" aria-label="报告导航"><div class="brand"><span class="brand-mark" aria-hidden="true"></span>阅读型汇报</div><p class="rail-label">本页目录</p><nav class="toc" data-toc aria-label="章节目录"></nav><div class="rail-note">合成示例。场景、角色与用例均为演示设定。<br><a href="report.html">打开空白模板 →</a></div></aside>
+    <main id="main">
+      <header class="hero">
+        <p class="eyebrow">合成示例 · 流程评审</p>
+        <h1>共享工具预约：先验证冲突处理，再决定是否试用</h1>
+        <p class="subtitle">为一个虚构团队比较共享表格与预约表单两种方案。先明确输入、人工确认和异常处理，再安排小范围验证。</p>
+        <dl class="metadata"><div><dt>阅读对象</dt><dd>流程负责人、工具保管员</dd></div><div><dt>信息性质</dt><dd>全部为合成设定</dd></div><div><dt>当前状态</dt><dd>待验证方案</dd></div></dl>
+        <p class="notice">本页仅展示报告写法。没有接入预约系统，没有执行实际试点，也没有真实效率或验收数据。</p>
+      </header>
+
+      <section class="report-section" data-section id="conclusion" data-nav-label="建议与决定">
+        <div class="section-heading"><span class="section-kicker">结论</span><h2>先跑通边界用例，再谈推广</h2></div>
+        <p class="lead">建议用预约表单做一次受控试用，前提是先验证时间冲突、撤回和逾期归还。现有合成材料只支持制定验证计划。</p>
+        <div class="decision"><div class="decision-label">需要决定</div><p>是否由流程负责人组织一次演练，并指定保管员处理冲突和逾期。通过条件是<a href="#details">用例表</a>中的关键路径能得到明确结果。</p></div>
+        <div class="summary-grid"><article class="summary-card"><h3>建议动作</h3><p>先验证一条预约到归还的完整路径。</p></article><article class="summary-card"><h3>当前依据</h3><p>两种方案的设定与十二条合成用例。</p></article><article class="summary-card"><h3>仍需确认</h3><p>实际处理耗时、角色权限和提醒渠道。</p></article></div>
+      </section>
+
+      <section class="report-section" data-section id="comparison" data-nav-label="方案对比">
+        <div class="section-heading"><span class="section-kicker">比较</span><h2>统一比较预约与异常处理</h2></div>
+        <p>下表是本次方案设定，尚未通过系统或真实使用验证。它帮助确定试用内容。</p>
+        <div class="table-scroll" tabindex="0" role="region" aria-label="预约方案比较表"><table><caption>合成方案设定 · 比较范围：预约提交、确认、归还与异常</caption><thead><tr><th scope="col">判断维度</th><th scope="col">共享表格</th><th scope="col">预约表单</th><th scope="col">验证重点</th></tr></thead><tbody><tr><th scope="row">提交信息</th><td>预约人填写一行记录。</td><td>按预设字段提交申请。</td><td>信息缺失时是否能纠正。</td></tr><tr><th scope="row">时间冲突</th><td>保管员查看重叠时段。</td><td>提交时提示潜在重叠。</td><td>提示后由谁作出最终确认。</td></tr><tr><th scope="row">变更与撤回</th><td>在原记录中标注变更。</td><td>保留原申请，记录新状态。</td><td>工具是否及时重新可约。</td></tr><tr><th scope="row">归还与逾期</th><td>人工跟进并标记归还。</td><td>记录归还，提醒仍由人工处理。</td><td>不得暗示已有自动消息能力。</td></tr></tbody></table></div>
+      </section>
+
+      <section class="report-section" data-section id="process" data-nav-label="流程与责任">
+        <div class="section-heading"><span class="section-kicker">流程</span><h2>让每次交接都有接收人</h2></div>
+        <p>拟议主流程如下；发生冲突时暂不确认，由保管员联系预约人选择新时段。</p>
+        <ol class="flow"><li><strong>提交预约</strong><span>预约人填写工具、时段与用途。</span></li><li><strong>检查时段</strong><span>保管员核对冲突和工具状态。</span></li><li><strong>确认领取</strong><span>预约人确认时段，双方记录领取。</span></li><li><strong>登记归还</strong><span>保管员确认归还；异常转人工处理。</span></li></ol>
+        <p class="hint">本流程是演示设定。权限、消息接口与真实责任分工需要在试用前确认。</p>
+      </section>
+
+      <section class="report-section" data-section id="details" data-nav-label="十二条验证用例">
+        <div class="section-heading"><span class="section-kicker">明细</span><h2>把关键路径拆成可验证的动作</h2></div>
+        <p>以下用例均未执行。“预期结果”是拟议通过条件；实际结果需要在演练后另行记录。</p>
+        <div class="table-scroll" tabindex="0" role="region" aria-label="十二条合成验证用例，可左右滚动"><table class="wide-table"><caption>十二条合成用例 · 宽表可左右滚动，最后一列说明责任与后续动作</caption><thead><tr><th scope="col">用例</th><th scope="col">场景</th><th scope="col">输入与条件</th><th scope="col">预期结果</th><th scope="col">需保留的证据</th><th scope="col">执行状态</th><th scope="col">责任与下一动作</th></tr></thead><tbody>
+          <tr><td>01</td><td>正常提交</td><td>工具、时段、用途完整。</td><td>申请进入待确认。</td><td>申请记录与状态。</td><td><span class="pill pending">未执行</span></td><td>预约人演练提交。</td></tr>
+          <tr><td>02</td><td>缺少用途</td><td>用途为空。</td><td>提示补充，保留已填信息。</td><td>提示与输入保留截图。</td><td><span class="pill pending">未执行</span></td><td>流程负责人核对提示。</td></tr>
+          <tr><td>03</td><td>时段倒置</td><td>结束早于开始。</td><td>说明问题，不创建申请。</td><td>错误提示与记录查询。</td><td><span class="pill pending">未执行</span></td><td>预约人纠正时间。</td></tr>
+          <tr><td>04</td><td>时段重叠</td><td>同一工具存在重叠申请。</td><td>保管员处理，不直接确认。</td><td>重叠提示与人工决定。</td><td><span class="pill pending">未执行</span></td><td>保管员安排新时段。</td></tr>
+          <tr><td>05</td><td>工具维护</td><td>工具被标记为维护中。</td><td>申请人知道暂不可领取。</td><td>状态与说明。</td><td><span class="pill pending">未执行</span></td><td>保管员确认可用日期。</td></tr>
+          <tr><td>06</td><td>正常确认</td><td>工具可用且无冲突。</td><td>保留确认人和确认时间。</td><td>确认记录。</td><td><span class="pill pending">未执行</span></td><td>保管员执行确认。</td></tr>
+          <tr><td>07</td><td>确认前撤回</td><td>预约人撤回待确认申请。</td><td>保留撤回记录，释放时段。</td><td>原申请与撤回结果。</td><td><span class="pill pending">未执行</span></td><td>预约人检查可约状态。</td></tr>
+          <tr><td>08</td><td>确认后改期</td><td>已确认申请需要新时段。</td><td>新时段重新核对冲突。</td><td>变更记录与重新确认。</td><td><span class="pill pending">未执行</span></td><td>保管员核对影响。</td></tr>
+          <tr><td>09</td><td>领取登记</td><td>预约人到场领取。</td><td>双方知道工具当前持有人。</td><td>领取记录。</td><td><span class="pill pending">未执行</span></td><td>双方确认交接。</td></tr>
+          <tr><td>10</td><td>正常归还</td><td>工具按时且状态正常。</td><td>登记归还并恢复可约。</td><td>归还记录与工具状态。</td><td><span class="pill pending">未执行</span></td><td>保管员核对状态。</td></tr>
+          <tr><td>11</td><td>逾期未还</td><td>超过约定归还时间。</td><td>保管员人工联系并记录安排。</td><td>人工处理记录。</td><td><span class="pill pending">未执行</span></td><td>保管员确认下次预约影响。</td></tr>
+          <tr><td>12</td><td>归还损坏</td><td>归还时发现工具异常。</td><td>暂停可约并明确处理人。</td><td>异常说明与处理决定。</td><td><span class="pill pending">未执行</span></td><td>流程负责人决定处理。</td></tr>
+        </tbody></table></div><p class="hint">聚焦表格后可用左右方向键滚动。正文中的<a href="#conclusion">建议</a>基于本次设定，不代表这些用例已通过。</p>
+      </section>
+
+      <section class="report-section" data-section id="evidence" data-nav-label="依据与未知">
+        <div class="section-heading"><span class="section-kicker">证据</span><h2>保留可判断的边界</h2></div>
+        <div class="evidence-grid"><div class="evidence-box"><h3>本页已有材料</h3><ul><li>两种预约方案的合成设定。</li><li>十二条待执行用例及拟议通过条件。</li><li>拟议的人工交接与异常处理安排。</li></ul></div><div class="evidence-box uncertain"><h3>尚未取得的证据</h3><ul><li>真实用户是否能独立完成预约。</li><li>当前工具是否提供状态、权限和提醒接口。</li><li>两方案的实际耗时、维护成本与接受度。</li></ul></div></div>
+        <h3>来源与追溯</h3><ol class="sources"><li id="source-1">合成方案设定：见<a href="#comparison">方案比较</a>。用于说明比较口径，不是公开产品能力声明。</li><li id="source-2">合成用例：见<a href="#details">十二条验证用例</a>。用于制定演练，执行结果尚不存在。</li></ol>
+      </section>
+
+      <section class="report-section" data-section id="actions" data-nav-label="行动安排">
+        <div class="section-heading"><span class="section-kicker">行动</span><h2>用一次演练补足决定所需信息</h2></div>
+        <ol class="actions"><li><strong>流程负责人</strong><span>确认是否开展演练、选择参与人，并明确预约数据的保存范围。</span></li><li><strong>工具保管员</strong><span>逐条执行冲突、改期、逾期与损坏用例，记录实际结果及人工处理方式。</span></li><li><strong>评审参与人</strong><span>取得演练结果后，再决定继续试用、修改方案或保留共享表格。</span></li></ol>
+      </section>
+      <footer class="page-footer"><span>合成示例 · 无真实数据或实际验证结果</span><a href="#top">返回开头 ↑</a></footer>
+    </main>
+  </div>
+</body>
+</html>

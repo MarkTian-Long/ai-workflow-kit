@@ -5,7 +5,7 @@ description: Frame consequential open-ended decisions, research, or diagnosis be
 
 # Structured Analysis Discussion
 
-Status: `validating` (the method remains under evaluation; this is a lifecycle label, not a host enable/disable switch). Use in a host depends on installation, discovery and actual invocation.
+Status: `validating`.
 
 Use this skill to improve decision quality without running or installing STORM, DSPy, Promptfoo, or another external framework.
 

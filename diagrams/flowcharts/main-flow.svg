@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1040" height="790" viewBox="0 0 1040 790" role="img" aria-labelledby="title desc">
+<!-- SPDX-License-Identifier: MIT; neutral synthetic example. -->
+<title id="title">主流程：资料与结果的两次判断</title><desc id="desc">中性合成示例 · 判断分支明确写条件，返工回到具体步骤</desc>
+<defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L8 4 L0 8 Z" fill="#506783"/></marker></defs>
+<style>text{font-family:"Microsoft YaHei","Noto Sans CJK SC",sans-serif;fill:#22354d}.title{font-size:28px;font-weight:700}.subtitle{font-size:16px;fill:#65758a}.node-label{font-size:20px;font-weight:600}.edge-label{font-size:17px;paint-order:stroke;stroke:#f5f7fb;stroke-width:7px;stroke-linejoin:round}.lane-label{font-size:19px;font-weight:700;fill:#365f86}.node-shape{stroke:#7391b0;stroke-width:2;fill:#fff}.edge-path{fill:none;stroke:#506783;stroke-width:2.2;marker-end:url(#arrow);stroke-linejoin:round}</style>
+<rect width="1040" height="790" fill="#f5f7fb"/>
+<text x="40" y="54" class="title">主流程：资料与结果的两次判断</text><text x="40" y="87" class="subtitle">中性合成示例 · 判断分支明确写条件，返工回到具体步骤</text>
+<g class="edge" data-from="A" data-to="B" data-label=""><polyline class="edge-path" points="410,182 410,230"/>
+</g>
+<g class="edge" data-from="B" data-to="C" data-label="否"><polyline class="edge-path" points="535,280 675,280"/>
+<text x="605" y="262" text-anchor="middle" class="edge-label">否</text>
+</g>
+<g class="edge" data-from="C" data-to="B" data-label="补齐后"><polyline class="edge-path" points="780,248 780,214 410,214 410,230"/>
+<text x="620" y="202" text-anchor="middle" class="edge-label">补齐后</text>
+</g>
+<g class="edge" data-from="B" data-to="D" data-label="是"><polyline class="edge-path" points="410,330 410,388"/>
+<text x="437" y="363" text-anchor="middle" class="edge-label">是</text>
+</g>
+<g class="edge" data-from="D" data-to="E" data-label=""><polyline class="edge-path" points="410,452 410,508"/>
+</g>
+<g class="edge" data-from="E" data-to="D" data-label="否"><polyline class="edge-path" points="270,560 180,560 180,420 295,420"/>
+<text x="158" y="495" text-anchor="middle" class="edge-label">否</text>
+</g>
+<g class="edge" data-from="E" data-to="F" data-label="是"><polyline class="edge-path" points="410,612 410,668"/>
+<text x="438" y="643" text-anchor="middle" class="edge-label">是</text>
+</g>
+<g class="node" data-id="A" data-role="">
+<rect class="node-shape" x="295.0" y="118.0" width="230" height="64" rx="32.0" style="fill:#fff"/>
+<text x="410" y="157" text-anchor="middle" class="node-label">接收申请</text></g>
+<g class="node" data-id="B" data-role="">
+<polygon class="node-shape" points="410,230.0 535.0,280 410,330.0 285.0,280"/>
+<text x="410" y="287" text-anchor="middle" class="node-label">资料齐全？</text></g>
+<g class="node" data-id="C" data-role="">
+<rect class="node-shape" x="675.0" y="248.0" width="210" height="64" rx="14" style="fill:#fff"/>
+<text x="780" y="287" text-anchor="middle" class="node-label">补充资料</text></g>
+<g class="node" data-id="D" data-role="">
+<rect class="node-shape" x="295.0" y="388.0" width="230" height="64" rx="14" style="fill:#fff"/>
+<text x="410" y="427" text-anchor="middle" class="node-label">执行处理</text></g>
+<g class="node" data-id="E" data-role="">
+<polygon class="node-shape" points="410,508.0 550.0,560 410,612.0 270.0,560"/>
+<text x="410" y="567" text-anchor="middle" class="node-label">结果符合要求？</text></g>
+<g class="node" data-id="F" data-role="">
+<rect class="node-shape" x="295.0" y="668.0" width="230" height="64" rx="32.0" style="fill:#e2f2ea"/>
+<text x="410" y="707" text-anchor="middle" class="node-label">完成交付</text></g>
+</svg>

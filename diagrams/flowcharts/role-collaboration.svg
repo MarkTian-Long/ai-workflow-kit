@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700" role="img" aria-labelledby="title desc">
+<!-- SPDX-License-Identifier: MIT; neutral synthetic example. -->
+<title id="title">角色协作：交接与检查各有责任</title><desc id="desc">中性合成示例 · 泳道表示责任，箭头表示工作交接</desc>
+<defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L8 4 L0 8 Z" fill="#506783"/></marker></defs>
+<style>text{font-family:"Microsoft YaHei","Noto Sans CJK SC",sans-serif;fill:#22354d}.title{font-size:28px;font-weight:700}.subtitle{font-size:16px;fill:#65758a}.node-label{font-size:20px;font-weight:600}.edge-label{font-size:17px;paint-order:stroke;stroke:#f5f7fb;stroke-width:7px;stroke-linejoin:round}.lane-label{font-size:19px;font-weight:700;fill:#365f86}.node-shape{stroke:#7391b0;stroke-width:2;fill:#fff}.edge-path{fill:none;stroke:#506783;stroke-width:2.2;marker-end:url(#arrow);stroke-linejoin:round}</style>
+<rect width="1200" height="700" fill="#f5f7fb"/>
+<text x="40" y="54" class="title">角色协作：交接与检查各有责任</text><text x="40" y="87" class="subtitle">中性合成示例 · 泳道表示责任，箭头表示工作交接</text>
+<g data-lane="requester"><rect x="32" y="112" width="264" height="538" rx="16" fill="#eaf0f7" stroke="#d2dce9"/><text x="164.0" y="143" text-anchor="middle" class="lane-label">需求方</text></g>
+<g data-lane="coordinator"><rect x="320" y="112" width="264" height="538" rx="16" fill="#eaf0f7" stroke="#d2dce9"/><text x="452.0" y="143" text-anchor="middle" class="lane-label">协调人</text></g>
+<g data-lane="executor"><rect x="608" y="112" width="264" height="538" rx="16" fill="#eaf0f7" stroke="#d2dce9"/><text x="740.0" y="143" text-anchor="middle" class="lane-label">执行人</text></g>
+<g data-lane="reviewer"><rect x="896" y="112" width="264" height="538" rx="16" fill="#eaf0f7" stroke="#d2dce9"/><text x="1028.0" y="143" text-anchor="middle" class="lane-label">检查人</text></g>
+<g class="edge" data-from="R1" data-to="C1" data-label=""><polyline class="edge-path" points="269,210 347,210"/>
+</g>
+<g class="edge" data-from="C1" data-to="E1" data-label=""><polyline class="edge-path" points="557,210 635,210"/>
+</g>
+<g class="edge" data-from="E1" data-to="Q1" data-label=""><polyline class="edge-path" points="845,210 1028,210 1028,278"/>
+</g>
+<g class="edge" data-from="Q1" data-to="C2" data-label="通过"><polyline class="edge-path" points="1028,382 1028,510 557,510"/>
+<text x="1058" y="445" text-anchor="middle" class="edge-label">通过</text>
+</g>
+<g class="edge" data-from="Q1" data-to="E1" data-label="未通过"><polyline class="edge-path" points="1138,330 1176,330 1176,154 740,154 740,178"/>
+<text x="938" y="181" text-anchor="middle" class="edge-label">未通过</text>
+</g>
+<g class="edge" data-from="C2" data-to="R2" data-label=""><polyline class="edge-path" points="347,510 269,510"/>
+</g>
+<g class="node" data-id="R1" data-role="requester">
+<rect class="node-shape" x="59.0" y="178.0" width="210" height="64" rx="14" style="fill:#fff"/>
+<text x="164" y="217" text-anchor="middle" class="node-label">提出需求</text></g>
+<g class="node" data-id="R2" data-role="requester">
+<rect class="node-shape" x="59.0" y="478.0" width="210" height="64" rx="14" style="fill:#fff"/>
+<text x="164" y="517" text-anchor="middle" class="node-label">确认结果</text></g>
+<g class="node" data-id="C1" data-role="coordinator">
+<rect class="node-shape" x="347.0" y="178.0" width="210" height="64" rx="14" style="fill:#fff"/>
+<text x="452" y="217" text-anchor="middle" class="node-label">核对范围</text></g>
+<g class="node" data-id="C2" data-role="coordinator">
+<rect class="node-shape" x="347.0" y="478.0" width="210" height="64" rx="14" style="fill:#fff"/>
+<text x="452" y="517" text-anchor="middle" class="node-label">交付结果</text></g>
+<g class="node" data-id="E1" data-role="executor">
+<rect class="node-shape" x="635.0" y="178.0" width="210" height="64" rx="14" style="fill:#fff"/>
+<text x="740" y="217" text-anchor="middle" class="node-label">完成处理</text></g>
+<g class="node" data-id="Q1" data-role="reviewer">
+<polygon class="node-shape" points="1028,278.0 1138.0,330 1028,382.0 918.0,330"/>
+<text x="1028" y="337" text-anchor="middle" class="node-label">检查通过？</text></g>
+</svg>

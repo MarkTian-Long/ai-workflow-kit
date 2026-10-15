@@ -11,3 +11,7 @@ structured-analysis-discussion 吸收以下公开项目的方法概念，未复�
 | [promptfoo/promptfoo](https://github.com/promptfoo/promptfoo) | `679e7ecb64a2e09042b009b549b81dc0d0b983bb` | 方法、模型、质量、耗时和成本的评估矩阵 |
 
 固定提交沿用方法来源记录，本次整理没有更新上游版本。相关来源和维护边界也随单项 Skill 保存在其 [provenance-and-maintenance](skills/structured-analysis-discussion/references/provenance-and-maintenance.md) 中，便于单独采用。
+
+新增 HTML 汇报模板、流程图与 SVG、文档转换包装器及发布准备工具为本集合独立原创的通用实现和合成示例。HTML 只采用阅读导航、长表、证据等高层需求，未复制公司内部模板的代码、图标或业务文本；图样不来自实际项目。
+
+文档转换工具依赖单独安装的 [Microsoft MarkItDown 0.1.7](https://github.com/microsoft/markitdown/tree/v0.1.7)，其 [MIT 许可证](https://github.com/microsoft/markitdown/blob/v0.1.7/LICENSE) 由上游维护。此处仅分发自有包装器和依赖声明，不捆绑 MarkItDown 或其可选依赖；其他依赖的许可仍分别适用。

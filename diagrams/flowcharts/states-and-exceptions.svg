@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1180" height="680" viewBox="0 0 1180 680" role="img" aria-labelledby="title desc">
+<!-- SPDX-License-Identifier: MIT; neutral synthetic example. -->
+<title id="title">状态及异常：事件决定下一状态</title><desc id="desc">中性合成示例 · 箭头标触发事件或条件，状态名称不写成操作步骤</desc>
+<defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L8 4 L0 8 Z" fill="#506783"/></marker></defs>
+<style>text{font-family:"Microsoft YaHei","Noto Sans CJK SC",sans-serif;fill:#22354d}.title{font-size:28px;font-weight:700}.subtitle{font-size:16px;fill:#65758a}.node-label{font-size:20px;font-weight:600}.edge-label{font-size:17px;paint-order:stroke;stroke:#f5f7fb;stroke-width:7px;stroke-linejoin:round}.lane-label{font-size:19px;font-weight:700;fill:#365f86}.node-shape{stroke:#7391b0;stroke-width:2;fill:#fff}.edge-path{fill:none;stroke:#506783;stroke-width:2.2;marker-end:url(#arrow);stroke-linejoin:round}</style>
+<rect width="1180" height="680" fill="#f5f7fb"/>
+<text x="40" y="54" class="title">状态及异常：事件决定下一状态</text><text x="40" y="87" class="subtitle">中性合成示例 · 箭头标触发事件或条件，状态名称不写成操作步骤</text>
+<g class="edge" data-from="pending" data-to="running" data-label="开始处理"><polyline class="edge-path" points="285,280 385,280"/>
+<text x="335" y="261" text-anchor="middle" class="edge-label">开始处理</text>
+</g>
+<g class="edge" data-from="running" data-to="done" data-label="处理成功"><polyline class="edge-path" points="615,280 700,280 700,190 815,190"/>
+<text x="754" y="173" text-anchor="middle" class="edge-label">处理成功</text>
+</g>
+<g class="edge" data-from="running" data-to="failed" data-label="可重试失败"><polyline class="edge-path" points="615,280 700,280 700,400 805,400"/>
+<text x="759" y="425" text-anchor="middle" class="edge-label">可重试失败</text>
+</g>
+<g class="edge" data-from="failed" data-to="running" data-label="重试且未超限"><polyline class="edge-path" points="920,435 920,470 555,470 555,315"/>
+<text x="741" y="458" text-anchor="middle" class="edge-label">重试且未超限</text>
+</g>
+<g class="edge" data-from="pending" data-to="terminated" data-label="主动取消"><polyline class="edge-path" points="180,315 180,560 385,560"/>
+<text x="180" y="449" text-anchor="middle" class="edge-label">主动取消</text>
+</g>
+<g class="edge" data-from="running" data-to="terminated" data-label="不可重试失败"><polyline class="edge-path" points="445,315 445,525"/>
+<text x="367" y="413" text-anchor="middle" class="edge-label">不可重试失败</text>
+</g>
+<g class="edge" data-from="failed" data-to="terminated" data-label="超限或取消"><polyline class="edge-path" points="1035,400 1080,400 1080,560 615,560"/>
+<text x="848" y="548" text-anchor="middle" class="edge-label">超限或取消</text>
+</g>
+<g class="node" data-id="pending" data-role="">
+<rect class="node-shape" x="75.0" y="245.0" width="210" height="70" rx="14" style="fill:#fff"/>
+<text x="180" y="287" text-anchor="middle" class="node-label">待处理</text></g>
+<g class="node" data-id="running" data-role="">
+<rect class="node-shape" x="385.0" y="245.0" width="230" height="70" rx="14" style="fill:#fff"/>
+<text x="500" y="287" text-anchor="middle" class="node-label">处理中</text></g>
+<g class="node" data-id="done" data-role="">
+<rect class="node-shape" x="815.0" y="155.0" width="210" height="70" rx="14" style="fill:#e2f2ea"/>
+<text x="920" y="197" text-anchor="middle" class="node-label">已完成</text></g>
+<g class="node" data-id="failed" data-role="">
+<rect class="node-shape" x="805.0" y="365.0" width="230" height="70" rx="14" style="fill:#fff"/>
+<text x="920" y="407" text-anchor="middle" class="node-label">失败待重试</text></g>
+<g class="node" data-id="terminated" data-role="">
+<rect class="node-shape" x="385.0" y="525.0" width="230" height="70" rx="14" style="fill:#fff"/>
+<text x="500" y="567" text-anchor="middle" class="node-label">已终止</text></g>
+</svg>

@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "runs_root": "runs",
+  "private_patterns": ["DO_NOT_PUBLISH_EXAMPLE_MARKER"],
+  "targets": {
+    "example": {
+      "repository": "YOUR_ACCOUNT/YOUR_REPOSITORY",
+      "branch": "main",
+      "visibility": "public",
+      "enabled": true,
+      "mode": "reviewed-snapshot",
+      "license": "MIT",
+      "state_path": "state/example.json",
+      "allowlist_path": "publication-allowlist.json",
+      "authorization_note": "Replace with the actual authority and scope after review",
+      "approved_policy_sha256": "REVIEW_AND_FILL_FROM_POLICY_DIGESTS",
+      "adopt_existing": {},
+      "removals": []
+    }
+  },
+  "assets": [
+    {
+      "id": "hello",
+      "kind": "sop",
+      "purpose": "A small synthetic example",
+      "target": "example",
+      "status": "candidate",
+      "source_root": "example-content",
+      "license": "MIT",
+      "dependencies": [],
+      "members": [{"source": "hello.md", "destination": "sops/hello.md"}],
+      "authorization_note": "Replace only after actual review",
+      "approved_policy_sha256": "REVIEW_AND_FILL_FROM_POLICY_DIGESTS"
+    }
+  ]
+}

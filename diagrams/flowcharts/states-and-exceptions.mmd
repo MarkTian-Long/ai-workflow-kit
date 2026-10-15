@@ -1,0 +1,15 @@
+%% SPDX-License-Identifier: MIT
+%% Neutral synthetic example; edit this source and update its SVG together.
+stateDiagram-v2
+    state "待处理" as pending
+    state "处理中" as running
+    state "已完成" as done
+    state "失败待重试" as failed
+    state "已终止" as terminated
+    pending --> running : 开始处理
+    running --> done : 处理成功
+    running --> failed : 可重试失败
+    failed --> running : 重试且未超限
+    pending --> terminated : 主动取消
+    running --> terminated : 不可重试失败
+    failed --> terminated : 超限或取消

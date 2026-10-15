@@ -1,0 +1,27 @@
+%% SPDX-License-Identifier: MIT
+%% Neutral synthetic example; edit this source and update its SVG together.
+flowchart LR
+    subgraph requester["需求方"]
+        direction TB
+        R1["提出需求"]
+        R2["确认结果"]
+    end
+    subgraph coordinator["协调人"]
+        direction TB
+        C1["核对范围"]
+        C2["交付结果"]
+    end
+    subgraph executor["执行人"]
+        direction TB
+        E1["完成处理"]
+    end
+    subgraph reviewer["检查人"]
+        direction TB
+        Q1{"检查通过？"}
+    end
+    R1 --> C1
+    C1 --> E1
+    E1 --> Q1
+    Q1 -->|"通过"| C2
+    Q1 -->|"未通过"| E1
+    C2 --> R2
