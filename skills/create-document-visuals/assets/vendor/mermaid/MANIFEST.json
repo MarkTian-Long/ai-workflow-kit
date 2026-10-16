@@ -1,0 +1,30 @@
+{
+  "name": "mermaid",
+  "version": "12.2.0",
+  "source": "https://registry.npmjs.org/mermaid/-/mermaid-12.2.0.tgz",
+  "repository": "https://github.com/mermaid-js/mermaid",
+  "license": "MIT",
+  "npmIntegrity": "sha512-w7nr/SFrLO7BaVTs3dQTvYSV6nYSBj0Yy9DjBhsIJtAcHqRzXSq4Pg32ujHZ/AdWsAMNEvvhbm5dt9E2tOiHzw==",
+  "downloadedArchiveBytes": 25955888,
+  "upstreamUnpackedBytes": 122322316,
+  "bundle": "mermaid.min.js",
+  "bundleBytes": 5494801,
+  "bundleSha256": "a8a6a6f805b074a8261a2825c86f99c8054acb3b35f50bb7e24a4f9f2c3c3b9f",
+  "preservedNotices": "THIRD_PARTY_NOTICES.txt",
+  "dompurify": {
+    "version": "3.4.12",
+    "license": "MPL-2.0 OR Apache-2.0",
+    "chosenOption": "Apache-2.0",
+    "licenseText": "notices/dompurify/LICENSE",
+    "licenseSha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+    "source": "https://registry.npmjs.org/dompurify/-/dompurify-3.4.12.tgz",
+    "npmIntegrity": "sha512-zQvGet8Z2sWbQhCmfFz/T5QWH2oBmjnqK3qvOjaqaNLrLEF912WamU+ohnTp0TCep/MFVHpdJuCZEdFOdTnEFg=="
+  },
+  "testedFamilies": [
+    "sequenceDiagram",
+    "stateDiagram-v2",
+    "erDiagram"
+  ],
+  "modifiedBundle": false,
+  "installScriptsExecuted": false
+}

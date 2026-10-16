@@ -1,0 +1,14 @@
+sequenceDiagram
+    autonumber
+    participant U as 用户
+    participant A as 审核服务
+    participant R as 人工复核
+    U->>A: 提交材料
+    A->>A: 校验必填信息
+    alt 信息完整
+        A-->>U: 返回处理结果
+    else 需要复核
+        A->>R: 创建复核任务
+        R-->>A: 确认结论
+        A-->>U: 返回复核结果
+    end

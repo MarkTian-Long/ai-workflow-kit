@@ -1,0 +1,17 @@
+erDiagram
+    CASE ||--o{ DOCUMENT : 包含
+    CASE ||--o{ REVIEW : 产生
+    REVIEW }o--|| REVIEWER : 由谁处理
+    CASE {
+        string name "案件名称"
+        string status "处理状态"
+    }
+    DOCUMENT {
+        string name "材料名称"
+    }
+    REVIEW {
+        string result "复核结论"
+    }
+    REVIEWER {
+        string name "复核人"
+    }

@@ -1,0 +1,12 @@
+stateDiagram-v2
+    state "草稿" as Draft
+    state "等待复核" as Review
+    state "已完成" as Done
+    state Check <<choice>>
+    [*] --> Draft
+    Draft --> Check: 提交
+    Check --> Done: 校验通过
+    Check --> Review: 存在疑点
+    Review --> Draft: 退回修改
+    Review --> Done: 人工确认
+    Done --> [*]

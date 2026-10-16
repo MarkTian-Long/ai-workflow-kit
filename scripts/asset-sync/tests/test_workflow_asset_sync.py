@@ -70,6 +70,29 @@ class SyncBoundaryTests(unittest.TestCase):
         with self.assertRaisesRegex(s.SyncError, "missing is never"):
             self.prepare()
 
+    def test_markdown_fenced_examples_are_not_live_resources(self):
+        for fence in ["```", "~~~~"]:
+            files = {"guide.md": (f"{fence}markdown\n![example](missing.svg)\n{fence}\n[actual](real.md)\n").encode(), "real.md": b"# real\n"}
+            self.assertEqual(s.validate_files(files, [])["local_references"], 1)
+
+    def test_fenced_code_still_gets_privacy_scan(self):
+        with self.assertRaisesRegex(s.SyncError, "Private/secret"):
+            s.validate_files({"guide.md": b"```\nSECRET_EXAMPLE\n```\n"}, ["SECRET_EXAMPLE"])
+
+    def test_missing_live_link_outside_fence_is_rejected(self):
+        with self.assertRaisesRegex(s.SyncError, "Missing packaged reference"):
+            s.validate_files({"guide.md": b"```\n[example](ignored.md)\n```\n[actual](missing.md)\n"}, [])
+
+    def test_markdown_packaged_directory_link_is_supported(self):
+        files = {"guide.md": b"[vendor](assets/vendor/)\n", "assets/vendor/LICENSE": b"license"}
+        self.assertEqual(s.validate_files(files, [])["local_references"], 1)
+
+    def test_missing_directory_and_directory_image_are_rejected(self):
+        with self.assertRaisesRegex(s.SyncError, "Missing packaged reference"):
+            s.validate_files({"guide.md": b"[missing](absent/)\n"}, [])
+        with self.assertRaisesRegex(s.SyncError, "Missing packaged reference"):
+            s.validate_files({"picture.svg": b'<svg xmlns="http://www.w3.org/2000/svg"><image href="assets/"/></svg>', "assets/LICENSE": b"license"}, [])
+
     def use_source_manifest(self):
         data = (self.root / "content" / "guide.md").read_bytes()
         s.write_json(self.root / "content" / "release.json", {"files": {

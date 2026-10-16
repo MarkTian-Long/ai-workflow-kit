@@ -145,6 +145,21 @@ class Resources(HTMLParser):
                 self.links.append((value, tag not in {"a"}))
 
 
+def markdown_without_fenced_code(text):
+    result = []
+    fence = None
+    for line in text.splitlines(keepends=True):
+        marker = re.match(r"^ {0,3}(`{3,}|~{3,})(.*)$", line.rstrip("\r\n"))
+        if fence is None:
+            if marker and not (marker[1][0] == "`" and "`" in marker[2]):
+                fence = (marker[1][0], len(marker[1]))
+            else:
+                result.append(line)
+        elif marker and marker[1][0] == fence[0] and len(marker[1]) >= fence[1] and not marker[2].strip():
+            fence = None
+    return "".join(result)
+
+
 def validate_files(files, private_patterns):
     links = 0
     folded = set()
@@ -163,7 +178,7 @@ def validate_files(files, private_patterns):
         refs = []
         suffix = Path(name).suffix.lower()
         if suffix == ".md":
-            refs = [(a or b, False) for a, b in re.findall(r"\[[^\]\n]+\]\((?:<([^>]+)>|([^\)\n]+))\)", text)]
+            refs = [(a or b, False) for a, b in re.findall(r"\[[^\]\n]+\]\((?:<([^>]+)>|([^\)\n]+))\)", markdown_without_fenced_code(text))]
         elif suffix in {".html", ".htm", ".svg"}:
             p = Resources()
             p.feed(text)
@@ -184,7 +199,10 @@ def validate_files(files, private_patterns):
                 continue
             target = (PurePosixPath(name).parent / unquote(u.path)).as_posix()
             normalized = os.path.normpath(target).replace("\\", "/")
-            if normalized not in files:
+            packaged_directory = suffix == ".md" and not resource and any(
+                member.startswith(normalized.rstrip("/") + "/") for member in files
+            )
+            if normalized not in files and not packaged_directory:
                 raise SyncError(f"Missing packaged reference: {name} -> {value}")
             links += 1
     return {"utf8_files": len(files), "local_references": links, "privacy_scan": "passed",

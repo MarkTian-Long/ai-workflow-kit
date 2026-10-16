@@ -1,0 +1,98 @@
+{
+  "schema_version": "0.1-trial",
+  "status": "draft",
+  "parent": {
+    "work_or_artifact": "{WORK_OR_ARTIFACT_ID}",
+    "document": "{relative/path/to/document.md}",
+    "version": "{v0.1}"
+  },
+  "visuals": [
+    {
+      "visual_id": "fig-01",
+      "role": "explanatory",
+      "question": "{This visual must answer what question?}",
+      "logic_version": "v0.1",
+      "source": {
+        "path": "source/{file}.mmd",
+        "format": "mmd",
+        "sha256": "{SHA256}"
+      },
+      "exports": [
+        {
+          "path": "export/{file}.svg",
+          "format": "svg",
+          "sha256": "{SHA256}",
+          "width": 0,
+          "height": 0
+        },
+        {
+          "path": "export/{file}.png",
+          "format": "png",
+          "sha256": "{SHA256}",
+          "width": 0,
+          "height": 0
+        }
+      ],
+      "renderer": {
+        "name": "create-document-visuals/render_visuals.mjs",
+        "version": "0.2.0",
+        "grammar": "mermaid-lite-flowchart-v1",
+        "engine": "{actual engine and version}"
+      },
+      "accessibility": {
+        "kind": "informative",
+        "alt": "{Describe the conclusion conveyed by the visual}",
+        "caption": "{Caption}",
+        "text_fallback": "{relative section or concise text fallback}"
+      },
+      "rights_and_security": {
+        "sensitivity": "L1-internal",
+        "source_or_license": "{source / license / internal derived work}",
+        "external_processing": "none"
+      },
+      "qa": {
+        "semantic": {
+          "result": "pending",
+          "checker": "{name}",
+          "checked_at": "{ISO-8601}",
+          "known_difference": "none"
+        },
+        "visual": {
+          "result": "pending",
+          "checker": "{name}",
+          "checked_at": "{ISO-8601}",
+          "known_difference": "none"
+        },
+        "links": {
+          "result": "pending",
+          "checker": "{name}",
+          "checked_at": "{ISO-8601}",
+          "known_difference": "none"
+        },
+        "manifest": {
+          "result": "pending",
+          "checker": "{name}",
+          "checked_at": "{ISO-8601}",
+          "known_difference": "none"
+        },
+        "text_bounds_check": {
+          "result": "pending",
+          "checker": "{name}",
+          "checked_at": "{ISO-8601}",
+          "known_difference": "none",
+          "target_width": 1000
+        },
+        "geometry": {
+          "result": "pending",
+          "report": "{relative QA report if created}",
+          "coverage": "{actual recognized structures}",
+          "manual_checks": [
+            "business semantics",
+            "reading order",
+            "final container display"
+          ]
+        }
+      }
+    }
+  ]
+}

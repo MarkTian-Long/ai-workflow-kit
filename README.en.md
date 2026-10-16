@@ -8,6 +8,7 @@ Small tools and methods for working with AI. Pick one for the task you want to c
 | --- | --- | --- |
 | Save conversation outcomes, archive, or hand work over | [session-closeout Skill](skills/session-closeout/SKILL.md) | A defined scope and task materials become checked artifact links, open items, and actual operation results. Native conversation tools are a conditional dependency. |
 | Think through an open problem before deciding | [structured-analysis-discussion Skill](skills/structured-analysis-discussion/SKILL.md) | Goals, constraints, and evidence become necessary conditions, counterexamples, unknowns, and proposed actions. Use it for unresolved analysis. |
+| Create document flow, handoff, sequence, state, or ER diagrams | [Document visuals Skill](skills/create-document-visuals/SKILL.md) · [Setup and usage](docs/document-visuals.md) | Editable sources, offline SVG/PNG, and geometry checks. Native families use a separate fixed local Mermaid engine. |
 | Prepare a handoff without installing a Skill | [One-page handoff SOP](sops/session-handoff.md) | Check existing materials, adapt the request, and save a minimal handoff. |
 | Make a report that is readable, comparable, and traceable | [HTML report template](templates/html-report/README.md) | Edit the blank template or synthetic example and open it in a desktop browser. Sections can be added or removed. |
 | Explain steps, roles, or state changes | [Flowchart guide and examples](diagrams/flowcharts/README.md) | Three editable Mermaid diagrams and offline SVGs, with a creation SOP. Choose the relevant example. |
@@ -21,7 +22,7 @@ Small tools and methods for working with AI. Pick one for the task you want to c
 
 Read an SOP directly. For templates, diagrams, and scripts, keep the entire selected directory and the root [LICENSE](LICENSE), then follow its instructions. For a Skill, first ask your agent to read the selected SKILL.md explicitly and try it in an isolated task. If installation is needed, copy only the complete selected Skill directory to a location supported by the host. Preserve and review any existing Skill with the same name before applying your adaptation.
 
-The two Skills allow the host to select them when applicable. File presence, discovery, selection, and successful execution are separate checks. The analysis Skill's `validating` status means that method benefits are still being observed; it can be used within its stated scope. This label is not a host enable/disable switch. The host's effective rules and the user's current authorization take priority; these files do not grant tools or permissions.
+The three Skills allow the host to select them when applicable. File presence, discovery, selection, and successful execution are separate checks. The analysis Skill's `validating` status means that method benefits are still being observed; it can be used within its stated scope. This label is not a host enable/disable switch. The host's effective rules and the user's current authorization take priority; these files do not grant tools or permissions.
 
 This page provides an English overview. Most linked Skills, SOPs, and detailed guides currently use Chinese; the scripts and file paths remain the same in either language.
 

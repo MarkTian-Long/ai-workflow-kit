@@ -1,0 +1,79 @@
+{
+  "schema_version": "0.1",
+  "name": "business-blue-gray",
+  "purpose": "显式 SVG 布局参考；现有 Mermaid-lite renderer 不自动读取",
+  "font": {
+    "family": "Microsoft YaHei, sans-serif",
+    "title_px": 28,
+    "region_px": 20,
+    "node_px": 18,
+    "edge_px": 16,
+    "note_px": 16,
+    "line_height": 1.4
+  },
+  "colors": {
+    "canvas": "#FFFFFF",
+    "text": "#17202A",
+    "secondary_text": "#526176",
+    "edge": "#64748B",
+    "step": {
+      "fill": "#F3F6FA",
+      "stroke": "#8190A5"
+    },
+    "decision": {
+      "fill": "#FFF2D9",
+      "stroke": "#B7791F"
+    },
+    "result": {
+      "fill": "#E9F4ED",
+      "stroke": "#507B60"
+    },
+    "exception": {
+      "fill": "#F2F3F5",
+      "stroke": "#8A919D"
+    },
+    "region": {
+      "fill": "#FAFBFD",
+      "stroke": "#CBD5E1"
+    }
+  },
+  "geometry": {
+    "canvas_width": 1100,
+    "canvas_height": 800,
+    "outer_padding": 40,
+    "node_min_padding": 16,
+    "node_corner_radius": 10,
+    "node_border_width": 1.5,
+    "edge_width": 2,
+    "parallel_gap": 24
+  },
+  "reading": {
+    "default": "desktop",
+    "reference_display_width_px": [
+      900,
+      1100
+    ],
+    "narrow_screen_trigger": [
+      "explicit-mobile-need",
+      "existing-acceptance-agreement",
+      "observed-layout-problem"
+    ]
+  },
+  "markers": {
+    "node_group": "data-visual-node",
+    "primary_shape": "data-visual-shape",
+    "edge_group": "data-visual-edge",
+    "edge_line": "data-visual-line",
+    "edge_from": "data-from",
+    "edge_to": "data-to",
+    "region_group": "data-visual-region"
+  },
+  "semantics": {
+    "step": "动作或处理",
+    "decision": "输入已确认的实际判断",
+    "result": "图中的结果或产物，不代表实际能力已验证",
+    "exception": "补充、异常或人工处理，以文字确认含义"
+  },
+  "source": "本地现有规范的独立参数化；不包含客户资料或上游模板代码"
+}
+

@@ -1,5 +1,7 @@
 # 来源与归属
 
+create-document-visuals v0.3.0 的自建脚本、指南、模板和合成样例经权利人确认，按本库 MIT 许可提供；发布包作通用安装路径与显式依赖准备适配，不包含内部项目、追踪状态或原文。固定官方 Mermaid 12.2.0 的清单、MIT 许可、原 bundle 第三方声明及 DOMPurify 3.4.12 的 Apache-2.0 选项全文随 [vendor](skills/create-document-visuals/assets/vendor/mermaid/) 保留；bundle 由使用者通过固定官方 npm 来源与哈希核验准备，不随仓库重分发。单独安装的 Graphviz/Viz、Sharp、Playwright、Marked 依其上游许可适用，不随本库捆绑。
+
 本快照的 Skill、SOP 和说明为本集合的自有文本，按仓库 [MIT License](LICENSE) 提供。session-closeout、共用沉淀标准和会话交接 SOP 来自同一维护源的通用方法；公开快照没有包含私人任务回执、客户原文、账号或机器配置。
 
 structured-analysis-discussion 吸收以下公开项目的方法概念，未复制或打包其代码，也不运行或安装这些框架：

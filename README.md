@@ -8,6 +8,7 @@
 | --- | --- | --- |
 | 保存会话成果、归档或交接续接 | [session-closeout Skill](skills/session-closeout/SKILL.md) | 给出范围和任务材料，得到核验后的成果入口、待办和实际操作结果；原生会话工具是条件依赖 |
 | 开放问题还没想清楚，先拆解再决定 | [structured-analysis-discussion Skill](skills/structured-analysis-discussion/SKILL.md) | 给出目标、约束和证据，得到必要条件、反例、未知和行动建议；不套用简单执行 |
+| 为文档制作流程、角色交接、时序、状态或 ER 图 | [文档视觉化 Skill](skills/create-document-visuals/SKILL.md) · [安装使用](docs/document-visuals.md) | 可编辑图源、离线 SVG/PNG 与几何检查；原生图显式使用固定本地 Mermaid |
 | 不安装 Skill，直接整理会话交接 | [一页交接 SOP](sops/session-handoff.md) | 核对现有材料，复制自然语言请求，保存最小交接 |
 | 制作可阅读、可比较、可追溯的汇报 | [HTML 汇报模板](templates/html-report/README.md) | 编辑空白骨架或合成示例，桌面浏览器直接打开；章节可增减 |
 | 说明步骤、角色或状态变化 | [流程图制作与图样](diagrams/flowcharts/README.md) | 三组可编辑 Mermaid 与离线 SVG，含制作 SOP；按问题取用 |
@@ -21,7 +22,7 @@
 
 SOP 直接读取。模板、图样和脚本保留整个对应目录及根 [LICENSE](LICENSE)，再按各自说明使用。Skill 可先让 Agent 明确读取所选 SKILL.md，在隔离任务试用；需要安装时仅复制完整所选目录到宿主支持的位置。遇到同名 Skill，先保留旧源并审阅自己的适配。
 
-两项 Skill 允许宿主在适用时选择；文件存在、被发现、命中和执行成功分别核验。分析 Skill 的 `validating` 表示方法收益仍在观察，可按边界使用，不是宿主启停开关。宿主有效规则和当前用户授权优先，文本不能增加工具能力或权限。
+三项 Skill 允许宿主在适用时选择；文件存在、被发现、命中和执行成功分别核验。分析 Skill 的 `validating` 表示方法收益仍在观察，可按边界使用，不是宿主启停开关。宿主有效规则和当前用户授权优先，文本不能增加工具能力或权限。
 
 ## 内容与维护
 

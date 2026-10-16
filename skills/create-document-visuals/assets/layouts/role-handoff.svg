@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="800" viewBox="0 0 1100 800" role="img" aria-labelledby="diagram-title diagram-desc">
+  <title id="diagram-title">资料复核与补充：三个角色的交接示例</title>
+  <desc id="diagram-desc">合成示例：提交方提交资料，受理系统检查完整性；不完整时返回提交方补充，完整时交由复核人确认，再由系统归档并反馈。示例不代表真实业务规则。</desc>
+  <style>
+    text { font-family: "Microsoft YaHei", sans-serif; fill: #17202A; }
+    .heading { font-size: 28px; font-weight: 700; }
+    .subtitle { font-size: 16px; fill: #526176; }
+    .region-title { font-size: 20px; font-weight: 700; }
+    .node-text { font-size: 18px; font-weight: 600; text-anchor: middle; dominant-baseline: middle; }
+    .edge-text { font-size: 16px; fill: #526176; }
+    .region { fill: #FAFBFD; stroke: #CBD5E1; stroke-width: 1.2; }
+    .step { fill: #F3F6FA; stroke: #8190A5; stroke-width: 1.5; }
+    .decision { fill: #FFF2D9; stroke: #B7791F; stroke-width: 1.5; }
+    .result { fill: #E9F4ED; stroke: #507B60; stroke-width: 1.5; }
+    .exception { fill: #F2F3F5; stroke: #8A919D; stroke-width: 1.5; }
+    .edge { fill: none; stroke: #64748B; stroke-width: 2; stroke-linejoin: round; }
+  </style>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 1 L 9 5 L 0 9 Z" fill="#64748B"/>
+    </marker>
+  </defs>
+  <rect width="1100" height="800" fill="#FFFFFF"/>
+  <text x="50" y="48" class="heading">资料复核与补充</text>
+  <text x="50" y="82" class="subtitle">合成示例｜不完整时补充；完整后交复核人确认，归档并反馈。</text>
+
+  <g data-visual-region="submitter">
+    <rect data-visual-shape="true" x="50" y="118" width="310" height="626" rx="12" class="region"/>
+    <text x="80" y="154" class="region-title">提交方</text>
+  </g>
+  <g data-visual-region="intake-system">
+    <rect data-visual-shape="true" x="395" y="118" width="310" height="626" rx="12" class="region"/>
+    <text x="425" y="154" class="region-title">受理系统</text>
+  </g>
+  <g data-visual-region="reviewer">
+    <rect data-visual-shape="true" x="740" y="118" width="310" height="626" rx="12" class="region"/>
+    <text x="770" y="154" class="region-title">复核人</text>
+  </g>
+
+  <g data-visual-edge="submit-register" data-from="submit" data-to="register">
+    <path data-visual-line="true" d="M 330 214 H 425" class="edge" marker-end="url(#arrow)"/>
+  </g>
+  <g data-visual-edge="register-check" data-from="register" data-to="complete">
+    <path data-visual-line="true" d="M 550 248 V 292" class="edge" marker-end="url(#arrow)"/>
+  </g>
+  <g data-visual-edge="check-supplement" data-from="complete" data-to="supplement">
+    <path data-visual-line="true" d="M 470 352 H 330" class="edge" marker-end="url(#arrow)"/>
+    <text x="370" y="338" class="edge-text">不完整</text>
+  </g>
+  <g data-visual-edge="supplement-resubmit" data-from="supplement" data-to="submit">
+    <path data-visual-line="true" d="M 205 318 V 248" class="edge" marker-end="url(#arrow)"/>
+    <text x="222" y="286" class="edge-text">重新提交</text>
+  </g>
+  <g data-visual-edge="check-review" data-from="complete" data-to="review">
+    <path data-visual-line="true" d="M 550 412 V 458 H 770" class="edge" marker-end="url(#arrow)"/>
+    <text x="636" y="444" class="edge-text">完整</text>
+  </g>
+  <g data-visual-edge="review-archive" data-from="review" data-to="archive">
+    <path data-visual-line="true" d="M 895 492 V 570 H 675" class="edge" marker-end="url(#arrow)"/>
+    <text x="770" y="554" class="edge-text">确认结果</text>
+  </g>
+  <g data-visual-edge="archive-feedback" data-from="archive" data-to="feedback">
+    <path data-visual-line="true" d="M 550 604 V 682 H 330" class="edge" marker-end="url(#arrow)"/>
+    <text x="372" y="666" class="edge-text">处理结果</text>
+  </g>
+
+  <g data-visual-node="submit">
+    <rect data-visual-shape="true" x="80" y="180" width="250" height="68" rx="10" class="step"/>
+    <text x="205" y="214" class="node-text">1 提交资料</text>
+  </g>
+  <g data-visual-node="register">
+    <rect data-visual-shape="true" x="425" y="180" width="250" height="68" rx="10" class="step"/>
+    <text x="550" y="214" class="node-text">2 登记并检查</text>
+  </g>
+  <g data-visual-node="complete">
+    <polygon data-visual-shape="true" points="550,292 630,352 550,412 470,352" class="decision"/>
+    <text x="550" y="352" class="node-text">资料完整？</text>
+  </g>
+  <g data-visual-node="supplement">
+    <rect data-visual-shape="true" x="80" y="318" width="250" height="68" rx="10" class="exception"/>
+    <text x="205" y="352" class="node-text">补充资料</text>
+  </g>
+  <g data-visual-node="review">
+    <rect data-visual-shape="true" x="770" y="424" width="250" height="68" rx="10" class="step"/>
+    <text x="895" y="458" class="node-text">3 确认复核结果</text>
+  </g>
+  <g data-visual-node="archive">
+    <rect data-visual-shape="true" x="425" y="536" width="250" height="68" rx="10" class="result"/>
+    <text x="550" y="570" class="node-text">4 归档并反馈</text>
+  </g>
+  <g data-visual-node="feedback">
+    <rect data-visual-shape="true" x="80" y="648" width="250" height="68" rx="10" class="result"/>
+    <text x="205" y="682" class="node-text">5 查看处理结果</text>
+  </g>
+  <text x="50" y="778" class="subtitle">文字与箭头表达关系；角色分区表示责任归属。实际分支与交接以当前输入为准。</text>
+</svg>
+

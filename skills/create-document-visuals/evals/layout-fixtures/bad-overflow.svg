@@ -1,0 +1,3 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="160" viewBox="0 0 600 160">
+  <g data-visual-node="small"><rect data-visual-shape="true" x="250" y="45" width="100" height="60" fill="#f2f6fb" stroke="#8190a5"/><text x="300" y="82" font-family="Microsoft YaHei,sans-serif" font-size="22" text-anchor="middle">这一整行中文明显超出节点边界</text></g>
+</svg>

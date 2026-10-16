@@ -1,5 +1,7 @@
 # 可编辑流程图小包
 
+需要从自己的输入制作、离线导出和检查更多图时，使用完整的 [create-document-visuals Skill](../../skills/create-document-visuals/SKILL.md) 及其[安装说明](../../docs/document-visuals.md)。本目录继续提供轻量图样，不要求安装 Skill。
+
 用于把步骤、责任或状态说清楚。先选要回答的问题，再取一个合成例子改写；不要求每份报告都画三种图。输入是已确认的步骤、角色、规则与未知，输出是可编辑 Mermaid 图源及离线 SVG 预览。
 
 | 想回答的问题 | 图源 | 离线预览 |

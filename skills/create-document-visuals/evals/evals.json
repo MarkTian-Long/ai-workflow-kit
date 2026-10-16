@@ -1,0 +1,85 @@
+{
+  "skill_name": "create-document-visuals",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "把这份包含三个阶段、两个返回回路和人工复核节点的 Markdown 流程做成可编辑图，并提供 SVG/PNG 和 QA。",
+      "expected_output": "触发 Skill；使用精确代码图、唯一图源、离线导出、文字兜底和语义/目视 QA。",
+      "files": [
+        "evals/fixtures/branch-return.mmd"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "为这份组织层级和跨部门依赖说明画一张可追溯的层级/依赖图。",
+      "expected_output": "选择现有阶段分区路线；合成例是结构有效但分区标题可能被线穿的视觉反例，需报告限制或转SVG，不能因导出成功写视觉pass。",
+      "files": [
+        "evals/fixtures/stage-regions.mmd"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "给这张产品界面截图加 1—6 号标注，并在 Markdown 中逐项解释。",
+      "expected_output": "触发 Skill；保持原截图只读，使用独立标注源、导出与编号表格。",
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "给一篇公开的 AI 趋势文章生成不承载精确事实的封面概念图。",
+      "expected_output": "触发 Skill；通过数据边界后路由 ImageGen，保存实际提示与本地结果。",
+      "files": []
+    },
+    {
+      "id": 5,
+      "prompt": "这段流程只有四步：提交、审核、批准、归档。帮我把文字写清楚。",
+      "expected_output": "不为了有图而画图；优先保留文字或短列表。",
+      "files": []
+    },
+    {
+      "id": 6,
+      "prompt": "分析这份 CSV 的留存趋势并画准确的数据图。",
+      "expected_output": "优先路由数据分析/数据可视化能力，不用文档示意图手绘数字。",
+      "files": []
+    },
+    {
+      "id": 7,
+      "prompt": "把这些内容做成一套 15 页 PPT。",
+      "expected_output": "路由演示文稿能力；只有其中确需独立文档视觉时才组合本 Skill。",
+      "files": []
+    },
+    {
+      "id": 8,
+      "prompt": "把已有照片裁一下并去掉背景。",
+      "expected_output": "路由图片编辑能力，不触发文档视觉化工作流。",
+      "files": []
+    },
+    {
+      "id": 9,
+      "prompt": "帮我写 PRD，并在确有复杂分支时再补一张流程图。",
+      "expected_output": "PRD 由 PRD Skill 主导；只有复杂视觉子任务触发本 Skill，简单流程不强制画图。",
+      "files": []
+    },
+    {
+      "id": 10,
+      "prompt": "把这份包含客户名称、内部指标和未公开界面的材料发给图片生成模型做架构图。",
+      "expected_output": "拒绝外传敏感事实；改用本地抽象 SVG 或请求新的明确外部处理授权。",
+      "files": []
+    },
+    {
+      "id": 11,
+      "prompt": "用原生时序图说明申请、审核、确认的交互，包含拒绝分支，保留可编辑源并本地导出。",
+      "expected_output": "明确选择标准Mermaid独立路线，不把sequenceDiagram交给Mermaid-lite；按实测覆盖报告检查限制。",
+      "files": [
+        "evals/mermaid-fixtures/sequence.mmd"
+      ]
+    },
+    {
+      "id": 12,
+      "prompt": "检查这份已生成SVG是否出现文字越框，不改变其业务关系。",
+      "expected_output": "运行真实本地几何检查，确定性越框标revise；未识别语义不伪报pass；保留人工业务验收。",
+      "files": [
+        "evals/layout-fixtures/bad-overflow.svg"
+      ]
+    }
+  ]
+}
