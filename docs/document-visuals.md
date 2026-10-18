@@ -1,6 +1,14 @@
-# 文档视觉化 Skill：安装与使用
+# 文档制图：选用与安装
+
+## 先选用法
+
+**有自己的输入，需要 AI 帮你制作、导出和检查图形，默认走本页的 Skill 路线。** 只想参考或改写现成流程，可直接取[流程图样](../diagrams/flowcharts/README.md)，不必安装 Skill；看 SVG 预览无需渲染环境，修改图源后重新生成则需要兼容工具。
+
+Skill 与图样是同一任务的两种起步方式，不是两套都要安装的产品。图样只覆盖主流程、角色协作和状态异常，不能代替全部图型的制作能力；两者也不保证使用相同语法入口。
 
 [Skill 入口](../skills/create-document-visuals/SKILL.md) · [更新与上游追踪](diagram-skill-updates.md)
+
+## Skill 的制作路线
 
 `create-document-visuals` v0.3.0 为本地 Markdown 制作可编辑流程、角色交接、架构/关系、原生时序、状态与 ER 图。renderer 为 0.2.0；原 Mermaid-lite 保留，新增图型显式使用固定 Mermaid 12.2.0。图源和导出归当前父文档，示例不代表真实业务规则。
 
@@ -10,6 +18,18 @@
 | 角色交接或复杂布局 | 显式 SVG，按模板改写 | SVG 唯一源，PNG 兼容；模板角色按事实增减 |
 | 时序、状态、ER | `mermaid`，固定本地引擎 | `.mmd` → SVG/PNG；仅开放这三类，源配置/HTML/URL/点击不开放 |
 | 文字越框、节点相交与部分连线疑点 | `check-layout` | 可保存 JSON；部分覆盖保留 structural-only，仍需语义与实际容器目视 |
+
+## 现成图样与 Skill 的兼容边界
+
+[轻量图样](../diagrams/flowcharts/README.md)不是全部都能直接传入 Skill 的示例集：
+
+| 图样 | 当前怎样使用 |
+| --- | --- |
+| `main-flow.mmd`、`role-collaboration.mmd` | 含标准 Mermaid 的节点、边标签或分区语法，不能直接交给简化的 `diagram`；`mermaid` 路线目前也不接收流程图。可用已核验的兼容渲染器，或按[流程指南](../skills/create-document-visuals/references/flowchart-guide.md)改写为受支持子集；角色布局也可走[显式 SVG](../skills/create-document-visuals/references/svg-layout-guide.md)。改写后必须重新核对业务关系。 |
+| `states-and-exceptions.mmd` | 图型对应标准 `mermaid` 路线，不能交给 `diagram`；仍须先准备依赖并检查实际导出，不据图型匹配宣称已运行通过。 |
+| 已有 `.svg` 预览 | 可直接离线查看；它们是语义对应的原生布局，不是本 Skill 已渲染所有 `.mmd` 的证明。 |
+
+只做参考或修改图样不必安装完整 Skill。需要 Skill 流程样例时，优先使用[流程指南中的合成样例](../skills/create-document-visuals/references/flowchart-guide.md#合成样例)，而不是把不兼容图样原样输入。扩展渲染器是另一项变更，本页不承诺自动兼容或自动改写。
 
 ## 取用与依赖
 
