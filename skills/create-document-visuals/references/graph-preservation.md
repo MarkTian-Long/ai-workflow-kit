@@ -34,15 +34,15 @@ SVG 沿用 [布局指南](svg-layout-guide.md) 的标记：节点是 `g[data-vis
 
 图题、背景等非关系元素显式标为 `data-visual-decoration="true"`；不要用该标记隐藏未核对的业务内容。无标记的图、存在无法归属的绘制元素或缺失边线时报告 unsupported，不能把零命中当通过。标准 Mermaid/Graphviz 的原始 SVG 不保证符合此契约，未适配时沿既有人工语义复核，不强行宣称已自动覆盖。
 
-以下路径均相对当前任务；`BASELINE_SHA256` 来自重绘前已冻结的基线，不从候选图生成。命令只输出检查报告，不安装依赖、不联网、不改图、不发布：
+由宿主定位当前 Skill 的 `SKILL_DIR`，不假定脚本在当前工作目录；输入输出路径均相对当前任务。`BASELINE_SHA256` 来自重绘前已冻结的基线，不从候选图生成。命令只输出检查报告，不安装依赖、不联网、不改图、不发布：
 
 ```sh
-python check_graph_preservation.py source/graph.json export/flow.svg --baseline-sha256 BASELINE_SHA256 --report export/graph.qa.json
+python "$SKILL_DIR/scripts/check_graph_preservation.py" source/graph.json export/flow.svg --baseline-sha256 BASELINE_SHA256 --report export/graph.qa.json
 ```
 
 可通过 `--source source/flow.mmd` 核对基线中的 `sourceSha256`。没有该参数时来源哈希明确标记未核对；基线中的旧 Windows 路径不会被自动打开。默认拒绝覆盖不同报告；明确更新同一报告时加 `--replace-report`，但始终禁止报告路径覆盖或别名指向输入文件。
 
-返回码：0 仅表示 `declaration-match`；2 表示关系差异，须修订；3 表示 SVG 覆盖不支持；1 表示调用/输入错误。报告含基线与 SVG 的 SHA256、差异和范围，不含本机绝对路径、字体文件或自动批准结论。
+返回码：0 仅表示 `declaration-match`；2 表示关系差异，须修订；3 表示 SVG 覆盖不支持；1 表示调用/输入错误。正常报告记录基线与 SVG 的 SHA256、差异和范围，不携带字体文件或自动批准结论；调用错误可能包含本机路径，运行回执默认留在任务本地，不上传共享 Skill。
 
 ## 不能省略的后续验收
 
