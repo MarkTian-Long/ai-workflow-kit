@@ -1,5 +1,9 @@
 # Provenance and maintenance
 
+## Current use
+
+Status: `enabled`. Use within the stated trigger after approved installation or improvement and the necessary checks. No task-count or separate promotion gate is required. Continued use does not prove effectiveness or downstream benefit; recipients verify their own discovery, installation and use. Private maintenance records are omitted.
+
 ## Current method sources
 
 The validating workflow absorbs concepts rather than executing external frameworks:
@@ -14,7 +18,9 @@ The upstream entries above are concept provenance only; upstream code and framew
 
 ## Validation and transfer boundary
 
-Status remains `validating`: this method is available for scoped use, while effectiveness and downstream benefit remain under observation. This local governance label is not a host enable/disable switch. Private task receipts are omitted; counts do not authorize promotion or prove recipient adoption. Derive necessary parts, relationships and conditions before selecting solutions; mixed tasks use the method only for unresolved analysis. The current shared source includes the bounded correction; no private validation history is redistributed.
+Private task receipts and machine paths are omitted. Derive necessary parts, relationships and conditions before selecting solutions; mixed tasks use the method only for unresolved analysis. When global relationships can change a decision, show a readable overview locating the current question or feature before local detail. The included process/interactions and fault-diagnosis references are conditional methods, not gates for every task.
+
+Bounded fault diagnosis also draws on the systematic-debugging concepts in [obra/superpowers](https://github.com/obra/superpowers), MIT; reviewed SKILL Git blob `62fc752aaef59a8bbed5d305f4cadc60f8ae07ed`. This is concept provenance, not an imported runtime package. Controlled checks, continued use and recipient adoption are separate; long-term benefit is not asserted.
 
 ## Upgrade and downgrade
 

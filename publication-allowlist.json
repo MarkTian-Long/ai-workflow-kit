@@ -65,6 +65,8 @@
     "skills/session-closeout/references/learning-reuse.md",
     "skills/structured-analysis-discussion/SKILL.md",
     "skills/structured-analysis-discussion/agents/openai.yaml",
+    "skills/structured-analysis-discussion/references/fault-diagnosis.md",
+    "skills/structured-analysis-discussion/references/process-and-interaction-analysis.md",
     "skills/structured-analysis-discussion/references/provenance-and-maintenance.md",
     "sops/asset-selection.md",
     "sops/prd-to-demo.md",
