@@ -21,3 +21,5 @@ structured-analysis-discussion 吸收以下公开项目的方法概念，未复�
 资产选择、需求到 Demo、网页研究回流三份 SOP，以及 PDF 按页读取包装器与合成样例生成脚本，均为本集合的原创通用说明或实现。没有直接再分发内部 SOP、真实 PDF、组织控制面或第三方 Skill。
 
 PDF 工具的核心依赖 [pypdf 6.10.0](https://github.com/py-pdf/pypdf/tree/6.10.0) 采用 [BSD-3-Clause](https://github.com/py-pdf/pypdf/blob/6.10.0/LICENSE)；可选合成样例使用 [ReportLab 4.4.9](https://pypi.org/project/reportlab/4.4.9/)，沿上游 BSD 许可。两者均独立安装，不捆绑上游包、字体或素材。
+
+Impeccable 的[安装与选用指南](docs/impeccable.md)为本集合的原创通用说明，按本库 MIT 许可提供。指南链接固定 pbakaus/impeccable 来源及其 Apache-2.0 许可、NOTICE中的 MIT 来源；本库不重分发其 Skill、引擎、插件或钩子，也不将上游内容改为 MIT。

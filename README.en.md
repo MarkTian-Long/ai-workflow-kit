@@ -15,6 +15,7 @@ Skills, SOPs, templates, and small tools organized by task. Choose what you want
 | Convert an entire local document into Markdown | [Document conversion tool](scripts/document-conversion/README.md) | Convert PDF, Word, and other documents for reading and search. Not all layout is preserved; no OCR. |
 | Extract only the PDF pages you need | [PDF page reader](scripts/pdf-on-demand/README.md) | Inspect the page index, then select pages to extract. This differs from whole-document conversion; no OCR. |
 | Build an interactive product demo from requirements | [Requirements-to-demo SOP](sops/prd-to-demo.md) | Implement the agreed behaviors, check successful and exceptional paths in a browser, and identify simulated capabilities. |
+| Review and refine an existing interface | [Impeccable setup and selection](docs/impeccable.md) | An optional upstream UI review and refinement tool; check the pinned source, dependencies, and fit alongside existing design workflows. |
 | Bring web research back into the current project | [Web research handoff SOP](sops/web-research-to-local.md) | Gather decision-relevant evidence, check sources and counterexamples, then merge verified findings into the project's authoritative materials. |
 
 ## Using an asset
