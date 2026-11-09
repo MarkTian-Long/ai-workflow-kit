@@ -16,7 +16,7 @@ Skills, SOPs, templates, and small tools organized by task. Choose what you want
 | Extract only the PDF pages you need | [PDF page reader](scripts/pdf-on-demand/README.md) | Inspect the page index, then select pages to extract. This differs from whole-document conversion; no OCR. |
 | Build an interactive product demo from requirements | [Requirements-to-demo SOP](sops/prd-to-demo.md) | Implement the agreed behaviors, check successful and exceptional paths in a browser, and identify simulated capabilities. |
 | Review and refine an existing interface | [Impeccable setup and selection](docs/impeccable.md) | An optional upstream UI review and refinement tool; check the pinned source, dependencies, and fit alongside existing design workflows. |
-| Bring web research back into the current project | [Web research handoff SOP](sops/web-research-to-local.md) | Gather decision-relevant evidence, check sources and counterexamples, then merge verified findings into the project's authoritative materials. |
+| Research public evidence and bring it back into the project | [Web research handoff SOP](sops/web-research-to-local.md) | For a few sources, use the SOP; for multi-source case discovery, supplier/industry coverage, deduplication, and conditional pricing comparison, use the [Public evidence research Skill](skills/public-evidence-research/SKILL.md). |
 
 ## Using an asset
 
