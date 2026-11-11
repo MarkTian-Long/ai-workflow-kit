@@ -23,3 +23,7 @@ structured-analysis-discussion 吸收以下公开项目的方法概念，未复�
 PDF 工具的核心依赖 [pypdf 6.10.0](https://github.com/py-pdf/pypdf/tree/6.10.0) 采用 [BSD-3-Clause](https://github.com/py-pdf/pypdf/blob/6.10.0/LICENSE)；可选合成样例使用 [ReportLab 4.4.9](https://pypi.org/project/reportlab/4.4.9/)，沿上游 BSD 许可。两者均独立安装，不捆绑上游包、字体或素材。
 
 Impeccable 的[安装与选用指南](docs/impeccable.md)为本集合的原创通用说明，按本库 MIT 许可提供。指南链接固定 pbakaus/impeccable 来源及其 Apache-2.0 许可、NOTICE中的 MIT 来源；本库不重分发其 Skill、引擎、插件或钩子，也不将上游内容改为 MIT。
+
+## 旅行规划与路书交付（2026-11-11）
+
+[旅行规划 SOP](sops/travel-planning.md)、travel-planning v0.1.0、离线数据检查器及合成示例为本集合独立编写，按 MIT 提供。只借鉴 Adaptive Travel Planner 的路线/行李/天气/疲劳联合判断，以及 Trip Planner Skill 的路线骨架和单一数据源概念；固定提交与边界见 [sources.md](skills/travel-planning/references/sources.md)。未复制或打包其 Skill 正文、实现、主题、图片或私人配置。参考上游未在本轮实际运行，不宣称兼容性或效果已验证。

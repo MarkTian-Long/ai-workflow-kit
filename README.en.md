@@ -10,6 +10,7 @@ Skills, SOPs, templates, and small tools organized by task. Choose what you want
 | --- | --- | --- |
 | Frame a problem and compare options before deciding | [Structured analysis Skill](skills/structured-analysis-discussion/SKILL.md) | Use goals, constraints, and evidence to identify necessary conditions, counterexamples, unknowns, and proposed actions. |
 | Save outcomes and hand work to the next conversation | [Conversation saving and handoff](sops/session-handoff.md) | Start with the short SOP; follow its link to the Skill when you need the full workflow, including multi-conversation closeout. |
+| Plan trips, audit itineraries, and prepare roadbooks | [Travel planning SOP](sops/travel-planning.md) | Build executable plans around evidence, luggage, transport, and return deadlines; includes an optional Skill, offline checks, and web-delivery gates, without automatic bookings. |
 | Create flow, role, architecture, or state diagrams | [Document diagram guide](docs/document-visuals.md) | Use examples to adapt an existing diagram, or the Skill to create, export, and check diagrams from new requirements. |
 | Present findings in a readable comparison report | [HTML report template](templates/html-report/README.md) | Edit the report skeleton and open it in a desktop browser. This is a reading page, not an interactive product demo. |
 | Convert an entire local document into Markdown | [Document conversion tool](scripts/document-conversion/README.md) | Convert PDF, Word, and other documents for reading and search. Not all layout is preserved; no OCR. |

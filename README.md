@@ -10,6 +10,7 @@
 | --- | --- | --- |
 | 拆解问题、比较方案再作决定 | [结构化分析 Skill](skills/structured-analysis-discussion/SKILL.md) | 根据目标、约束和证据，梳理必要条件、反例、未知与建议。 |
 | 保存成果、交接给下一次会话 | [会话保存与交接](sops/session-handoff.md) | 先用一页 SOP；需要多会话收口等完整流程时，再按指南取用 Skill。 |
+| 规划旅行、审核行程与制作路书 | [旅行规划 SOP](sops/travel-planning.md) | 从证据、行李、交通和返程约束得到可执行计划；含可选 Skill、离线检查及网页交付验收，不自动订票。 |
 | 制作流程、角色、架构或状态图 | [文档制图指南](docs/document-visuals.md) | 改现成例子用图样；按新需求制作、导出和检查图形用 Skill。 |
 | 整理成便于阅读与比较的汇报 | [HTML 汇报模板](templates/html-report/README.md) | 修改报告骨架，桌面浏览器打开；用于阅读，不是交互式产品 Demo。 |
 | 把整份本地文档转成 Markdown | [文档转换工具](scripts/document-conversion/README.md) | 处理 PDF、Word 等文档，便于阅读与搜索；不保留全部版式，无 OCR。 |
