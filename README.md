@@ -17,7 +17,8 @@
 | 只提取 PDF 中需要的页面 | [PDF 按页读取](scripts/pdf-on-demand/README.md) | 先看逐页索引，再选页提取；与整份格式转换不同，无 OCR。 |
 | 按需求制作可操作的产品 Demo | [需求到 Demo SOP](sops/prd-to-demo.md) | 对照需求实现交互、实际检查成功与异常路径，标明模拟范围。 |
 | 评审并改进已有界面 | [Impeccable 安装与选用](docs/impeccable.md) | 可选的上游界面评审与改进工具；查看固定来源、依赖及与现有设计方法的分工。 |
-| 把网页研究结果接回当前项目 | [网页研究回流 SOP](sops/web-research-to-local.md) | 围绕决定补证据，核对来源与反例，再合并回项目的正式材料。 |
+| 开展大范围公开证据研究 | [公开证据研究 Skill](skills/public-evidence-research/SKILL.md) | 跨供应商、行业、业务任务和时间发现资料，分级取证、去重、覆盖审计与条件化对标。 |
+| 把网页研究结果接回当前项目 | [网页研究回流 SOP](sops/web-research-to-local.md) | 对已完成或小范围研究，核对来源、反例与未知，再将适用结论合并到项目正式材料。 |
 
 ## 如何取用
 
