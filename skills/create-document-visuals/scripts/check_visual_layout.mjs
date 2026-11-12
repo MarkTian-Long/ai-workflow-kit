@@ -15,7 +15,7 @@ import { createRequire } from 'node:module';
 import { fileURLToPath } from 'node:url';
 
 const require = createRequire(import.meta.url);
-const VERSION = '0.1.0';
+const VERSION = '0.2.0';
 const MANUAL_CHECKS = [
   'Confirm business order, branch conditions, arrow direction and exception/return paths against the source.',
   'Inspect the actual delivery size for readable Chinese, hierarchy, region meaning and intentional overlaps.',
@@ -71,7 +71,7 @@ export async function checkVisualLayout(options) {
   if (Buffer.byteLength(source) > 16 * 1024 * 1024) throw new Error('SVG exceeds the 16 MiB local inspection limit.');
   const report = {
     checker_version: VERSION, input: path.resolve(options.input), viewport: { width: options.width, height: 900 },
-    status: 'structural-only', coverage: { level: 'none', scope: 'SVG geometry only; no business semantics' },
+    status: 'structural-only', acceptance: 'Automated geometry only; pass is not visual or business acceptance.', coverage: { level: 'none', scope: 'SVG geometry only; no business semantics' },
     unsupported: [], manual_checks: MANUAL_CHECKS, issues: [],
     security: { scripts_disabled: true, foreign_object_allowed: false, external_resources_allowed: false, blocked_requests: 0 },
   };
@@ -212,6 +212,69 @@ export async function checkVisualLayout(options) {
       }
       const edges=[...svg.querySelectorAll(edgeSelector)], edgeLabels=[];
       let checkedEdges=0;
+      const routes=[],sampledRoutes=[];
+      // Exact centerline intersections for one continuous M/L/H/V path only.
+      // Curves, disconnected subpaths, stroke width and bridge symbolism need human review.
+      const eps=0.01, near=(a,b)=>Math.hypot(a.x-b.x,a.y-b.y)<eps;
+      const cross=(a,b)=>a.x*b.y-a.y*b.x;
+      const sub=(a,b)=>({x:a.x-b.x,y:a.y-b.y});
+      function linearPoints(line) {
+        const d=line.getAttribute('d')||'', tokens=d.match(/[a-zA-Z]|[-+]?(?:\d*\.\d+|\d+\.?)(?:[eE][-+]?\d+)?/g)||[];
+        if(d.replace(/[a-zA-Z]|[-+]?(?:\d*\.\d+|\d+\.?)(?:[eE][-+]?\d+)?|[\s,]/g,'') || !tokens.length) return null;
+        let at=0,command='',x=0,y=0,points=[];
+        while(at<tokens.length) {
+          if(/^[a-zA-Z]$/.test(tokens[at])) command=tokens[at++];
+          const c=command.toUpperCase(), relative=command!==c;
+          if(!['M','L','H','V'].includes(c) || (c==='M' && points.length)) return null;
+          const count=c==='H'||c==='V'?1:2;
+          if(at+count>tokens.length || tokens.slice(at,at+count).some(t=>/^[a-zA-Z]$/.test(t))) return null;
+          const a=Number(tokens[at++]), b=count===2?Number(tokens[at++]):0;
+          if(c==='M'||c==='L') {x=relative?x+a:a;y=relative?y+b:b;}
+          if(c==='H') x=relative?x+a:a;
+          if(c==='V') y=relative?y+a:a;
+          const point=new DOMPoint(x,y).matrixTransform(line.getScreenCTM());
+          if(!points.length||!near(points.at(-1),point)) points.push({x:point.x,y:point.y});
+          if(c==='M') command=relative?'l':'L';
+        }
+        return points.length>1?points:null;
+      }
+      function segmentHits(a,b,c,d) {
+        const r=sub(b,a),t=sub(d,c),v=sub(c,a),den=cross(r,t);
+        if(Math.abs(den)>1e-8) {
+          const u=cross(v,t)/den,w=cross(v,r)/den;
+          return u>=-1e-8&&u<=1+1e-8&&w>=-1e-8&&w<=1+1e-8?[{x:a.x+u*r.x,y:a.y+u*r.y}]:[];
+        }
+        if(Math.abs(cross(v,r))>eps*Math.hypot(r.x,r.y)) return [];
+        const rr=r.x*r.x+r.y*r.y, project=p=>((p.x-a.x)*r.x+(p.y-a.y)*r.y)/rr;
+        const lo=Math.max(0,Math.min(project(c),project(d))),hi=Math.min(1,Math.max(project(c),project(d)));
+        if(hi<lo-1e-8) return [];
+        return [lo,(lo+hi)/2,hi].map(u=>({x:a.x+u*r.x,y:a.y+u*r.y}));
+      }
+      function simplify(points) {
+        const out=[];
+        for(const p of points) {
+          if(out.length&&near(out.at(-1),p)) continue;
+          while(out.length>1) {
+            const a=out.at(-2),b=out.at(-1),u=sub(b,a),v=sub(p,b);
+            if(Math.abs(cross(u,v))>eps || u.x*v.x+u.y*v.y<0) break;
+            out.pop();
+          }
+          out.push(p);
+        }
+        return out;
+      }
+      function tail(points,index,p) {return simplify([p,...points.slice(index+1)]);}
+      function equalRoute(a,b) {return a.length===b.length&&a.every((p,i)=>near(p,b[i]));}
+      function expectedJunction(a,b,i,j,p) {
+        const aPorts=[[a.from,a.points[0]],[a.to,a.points.at(-1)]],bPorts=[[b.from,b.points[0]],[b.to,b.points.at(-1)]];
+        if(aPorts.some(([id,point])=>near(point,p)&&bPorts.some(([other,q])=>id===other&&near(q,p)))) return true;
+        // Sharing a logical node alone does not exempt a crossing elsewhere.
+        // Only an identical route from the contact to that common port is exempt.
+        if(a.to===b.to&&equalRoute(tail(a.points,i,p),tail(b.points,j,p))) return true;
+        if(a.from===b.from&&equalRoute(simplify([p,...a.points.slice(0,i+1).reverse()]),simplify([p,...b.points.slice(0,j+1).reverse()]))) return true;
+        return false;
+      }
+      let checkedPairs=0,exactPairs=0,sampledPairs=0,expectedJunctions=0,segmentComparisons=0,budgetExceeded=false;
       edges.forEach((group,i)=>{
         const id=idOf(group,i,'edge');
         const title=[...group.children].find(el=>el.localName==='title')?.textContent || '';
@@ -225,6 +288,17 @@ export async function checkVisualLayout(options) {
         const lines=[...group.querySelectorAll('path[data-visual-line],path')].filter(el=>!el.closest('defs,marker') && shown(el));
         if (!lines.length) { unsupported.push(`edge ${id}: no measurable path.`); return; }
         checkedEdges++;
+        const points=lines.length===1&&!group.querySelector('line,polyline')?linearPoints(lines[0]):null;
+        if(points) routes.push({id,from,to,points});
+        else if(lines.length===1) {
+          const line=lines[0],length=line.getTotalLength(),matrix=line.getScreenCTM();
+          if(length&&matrix) {
+            const count=Math.min(240,Math.max(16,Math.ceil(length/6))),sampled=[];
+            for(let k=0;k<=count;k++) {const p=line.getPointAtLength(length*k/count).matrixTransform(matrix);sampled.push({x:p.x,y:p.y});}
+            sampledRoutes.push({id,from,to,points:sampled,approximate:true});
+          }
+        }
+        if(!points) unsupported.push(`edge ${id}: exact edge-to-edge intersections unmeasured; single curves may have sampled candidates, while multi-path edges remain unmeasured. Manual review required.`);
         for(const region of regions) for(const label of region.texts) {
           const r=box(label); let crossesLabel=false;
           for(const line of lines) {
@@ -254,16 +328,34 @@ export async function checkVisualLayout(options) {
           for(const text of labels) if(textPoints(text).some(p=>contains(node.shape,p.x,p.y))) issues.push({type:'edge-label-overlap',severity:'review',confidence:'heuristic',edge:id,node:node.id,message:'An edge label may overlap a non-endpoint node.'});
         }
       });
+      const candidateRoutes=[...routes,...sampledRoutes];
+      for(let a=0;a<candidateRoutes.length;a++) for(let b=a+1;b<candidateRoutes.length;b++) {
+        const first=candidateRoutes[a],second=candidateRoutes[b],findings=[],approximate=first.approximate||second.approximate;
+        if(budgetExceeded) continue;
+        checkedPairs++; if(approximate) sampledPairs++; else exactPairs++;
+        for(let i=0;i<first.points.length-1&&!budgetExceeded;i++) for(let j=0;j<second.points.length-1&&!budgetExceeded;j++) {
+          if(++segmentComparisons>500000) {budgetExceeded=true;continue;}
+          for(const p of segmentHits(first.points[i],first.points[i+1],second.points[j],second.points[j+1])) {
+            if(expectedJunction(first,second,i,j,p)) {expectedJunctions++;continue;}
+            if(!findings.some(q=>near(p,q))) findings.push(p);
+          }
+        }
+        if(findings.length) issues.push({type:'edge-edge-crossing',severity:'review',confidence:approximate?'heuristic':'geometric',edges:[first.id,second.id],
+          points:findings.map(p=>({x:round(p.x),y:round(p.y)})),
+          message:'Distinct edge centerlines intersect/touch/overlap outside a verified shared port or common trunk. Check whether accidental, an explicit junction, or a deliberate crossover; geometry alone cannot decide intent.'});
+      }
       for(let i=0;i<edgeLabels.length;i++) for(let j=i+1;j<edgeLabels.length;j++) {
         if(edgeLabels[i].edge===edgeLabels[j].edge) continue;
         if(intersection(edgeLabels[i].box,edgeLabels[j].box)) issues.push({type:'edge-label-overlap',severity:'review',confidence:'heuristic',edges:[edgeLabels[i].edge,edgeLabels[j].edge],message:'Edge label bounds overlap; check the actual glyphs.'});
       }
+      if(budgetExceeded) unsupported.push('Edge-pair segment-comparison budget exceeded; some pairs/segments were not checked.');
       const allText=[...svg.querySelectorAll('text')].filter(el=>shown(el) && el.textContent.trim());
       const mappedText=new Set([...nodes,...regions].flatMap(n=>n.texts).concat(edgeLabels.map(l=>l.text)));
       const unmappedText=allText.filter(t=>!mappedText.has(t)).length;
       if(unmappedText) unsupported.push(`${unmappedText} visible text element(s) lack a recognized node/region/edge owner.`);
-      const ungroupedPaths=svg.querySelectorAll('g.edgePaths path,path.flowchart-link').length;
-      if(ungroupedPaths) unsupported.push('Mermaid flowchart edge paths/labels outside recognized edge groups are not checked for crossings.');
+      const ungroupedPaths=[...svg.querySelectorAll('path,line,polyline')].filter(el=>!el.closest('defs,marker,clipPath,mask') && !el.closest(ownerSelector) && shown(el) && getComputedStyle(el).stroke!=='none').length;
+      if(ungroupedPaths) unsupported.push('Visible stroked paths/lines outside recognized owners are unmeasured; edge-pair coverage is incomplete.');
+      
       if(!nodes.length) unsupported.push('No recognized node geometry: use Graphviz g.node or explicit data-visual-node groups.');
       if(svg.querySelector('g.actor,g[class*="entity"],g.stateGroup,.stateDiagram,.sequenceDiagram,.erDiagram')) unsupported.push('State/ER/sequence geometry has partial coverage; diagram-specific semantics and unrecognized shapes require manual review.');
       if(svg.querySelector('filter,mask,clipPath,use,image,textPath')) unsupported.push('Filters, clipping, masks, use/image/textPath effects are not fully represented by the geometry checks.');
@@ -272,8 +364,12 @@ export async function checkVisualLayout(options) {
           fonts_ready:document.fonts.status==='loaded',rendered_svg_bounds:box(svg),recognized_node_groups:nodeGroups.length,checked_nodes:nodes.length,
           recognized_regions:regionGroups.length,checked_regions:regions.length,recognized_edge_groups:edges.length,checked_edges:checkedEdges,
           visible_text_elements:allText.length,unmapped_text_elements:unmappedText,
+          edge_pair_checks:{method:'exact centerline intersections for continuous M/L/H/V paths; bounded sampled candidates for single curves',
+            recognized_edges:edges.length,supported_routes:routes.length,sampled_routes:sampledRoutes.length,checked_pairs:checkedPairs,exact_pairs:exactPairs,sampled_pairs:sampledPairs,segment_comparisons:Math.min(segmentComparisons,500000),budget_exceeded:budgetExceeded,expected_junctions:expectedJunctions,
+            complete:routes.length===edges.length&&!ungroupedPaths&&!budgetExceeded,
+            limitations:['Curves only produce sampled heuristic candidates; tangencies or small crossings can be missed. Multi-path and unrecognized edges remain unmeasured.','Stroke width, arrowheads, self-crossings, edge-to-label clearance, jumps/bridges and intended junction semantics require manual review.','Shared logical endpoints only exempt identical common routes to the same port.']},
           node_bounds:nodes.map(n=>({id:n.id,...Object.fromEntries(Object.entries(n.box).map(([k,v])=>[k,round(v)]))})),
-          checks:{text_containment:'actual rendered SVG text bounds against primary shape fill',node_overlap:'actual shape-fill samples within intersecting bounds',edge_crossings:'heuristic path samples; only declared/resolved endpoints',region_titles:'heuristic path samples against title bounds; containment not enforced'} },
+          checks:{text_containment:'actual rendered SVG text bounds against primary shape fill',node_overlap:'actual shape-fill samples within intersecting bounds',edge_node_crossings:'heuristic path samples against non-endpoint node fills',edge_crossings:'edge-to-edge centerline checks; see edge_pair_checks coverage and limitations',region_titles:'heuristic path samples against title bounds; containment not enforced'} },
         issues,unsupported:[...new Set(unsupported)],
       };
     });
